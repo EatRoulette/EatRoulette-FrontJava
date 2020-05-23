@@ -6,3 +6,4 @@ EatRoulette-FrontJava.iml
 ui/ui.iml
 core/core.iml
 cli/cli.iml
+plugin/
