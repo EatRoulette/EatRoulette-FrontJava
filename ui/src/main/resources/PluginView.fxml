@@ -16,7 +16,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.plugin.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.plugin.PluginController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -69,8 +69,9 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button id="new_plugin" fx:id="newPlugin" layoutX="69.0" layoutY="55.0" mnemonicParsing="false" onAction="#addFileJarToDirectory" text="New plugin" />
+                  <Button id="new_plugin" layoutX="69.0" layoutY="55.0" mnemonicParsing="false" onAction="#addFileJarToDirectory" text="New plugin" />
                   <AnchorPane layoutX="1.0" layoutY="92.0" prefHeight="67.0" prefWidth="222.0" />
+                  <Button layoutX="146.0" layoutY="15.0" mnemonicParsing="false" onAction="#refreshAllPlugin" text="Refresh" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
