@@ -1,5 +1,7 @@
 package fr.eatroulette.core.plugins;
 
+import fr.eatroulette.core.plugin.PluginManagerConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -22,7 +24,7 @@ public class PluginManager {
 
 
     public PluginManager(){
-        this.pluginFolder = new File("plugins/");
+        this.pluginFolder = new File(PluginManagerConfig.PLUGIN_DIR);
         this.loadAllJar();
     }
 

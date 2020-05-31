@@ -1,4 +1,4 @@
-package fr.eatroulette.core.plugins;
+package fr.eatroulette.core.plugin;
 
 /**
  * First version of the interface for the plugins software.
