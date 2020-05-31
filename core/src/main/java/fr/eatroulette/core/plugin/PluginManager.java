@@ -1,4 +1,6 @@
-package fr.eatroulette.core.plugin;
+package fr.eatroulette.core.plugins;
+
+import fr.eatroulette.core.plugin.PluginManagerConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +75,7 @@ public class PluginManager {
         File f = this.hashMap.get(pluginName);
 
         URL url = f.toURI().toURL(); //Because File.toURL is deprecated and the doc tell to do like this
-//        System.out.println(url.toString());
+        System.out.println(url.toString());
         //Init classLoader
         ClassLoader classLoader = new URLClassLoader(new URL[] {url}, getClass().getClassLoader());
 
@@ -85,21 +87,19 @@ public class PluginManager {
             JarEntry entry = enumeration.nextElement();
             if(entry.getName().endsWith(".class")){
                 className = entry.getName().substring(0, entry.getName().length() - 6).replace("/", ".");
-//                System.out.println(className);
-                if(className.endsWith(PluginManagerConfig.PLUGIN_CLASS)){
 
+                if(className.equals("Test")){
                     Class<?> loadedClass = Class.forName(className, true, classLoader);
                     Constructor<?> loadedClassContructor = loadedClass.getConstructor();
 
                     Object instanceOfLodadClass = loadedClassContructor.newInstance();
-                    Method method = loadedClass.getMethod(PluginManagerConfig.PLUGIN_METHOD);
+                    Method method = loadedClass.getMethod("getName");
 
-//                    String name = (String) method.invoke(instanceOfLodadClass);
-                    method.invoke(instanceOfLodadClass);
+                    String name = (String) method.invoke(instanceOfLodadClass);
 
-//                    System.out.println("REFLECT NAME : " + name);
+                    System.out.println("REFLECT NAME : " + name);
                 }
-//                System.out.println("Found class => "+entry.getName());
+                System.out.println("Found class => "+entry.getName());
             }
         }
     }
