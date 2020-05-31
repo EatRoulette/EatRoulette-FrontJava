@@ -5,22 +5,34 @@ import com.google.common.io.Files;
 import fr.eatroulette.core.plugins.PluginManager;
 import fr.eatroulette.ui.main.Router;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.List;
 
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class PluginController extends Application {
+    public ScrollPane ScrollPanePlugin;
+    PluginManager p1Manager = new PluginManager();
     private Stage stage;
     private Router router;
 
@@ -45,7 +57,7 @@ public class PluginController extends Application {
         String strPathProject = pathProject.toAbsolutePath().toString();
 
         // concatenate the pwd with the location of the target
-        Path pluginPath = Paths.get(strPathProject+File.separator+"plugin"+ File.separator + file.getName());
+        Path pluginPath = Paths.get(strPathProject+File.separator+"plugins"+ File.separator + file.getName());
 
         // check the extension of the file
         String fileExtension = PluginController.getExtensionByGuava(file.getName());
@@ -57,7 +69,35 @@ public class PluginController extends Application {
 
     @FXML
     public void refreshAllPlugin() {
-        //plManage.loadAllJar();
+        this.p1Manager.loadAllJar();
+        VBox root = new VBox();
+        for (String pluginName: this.p1Manager.getPluginsName()){
+            Button button = new Button(pluginName);
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    try {
+                        p1Manager.runPlugin(pluginName);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            root.getChildren().add(button);
+        }
+        root.setSpacing(10);
+        root.setPadding(new Insets(10));
+        this.ScrollPanePlugin.setContent(root);
     }
 
     void setRouter(final Router router) {

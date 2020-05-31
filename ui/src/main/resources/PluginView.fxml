@@ -71,7 +71,8 @@
             </Label>
                   <Button id="new_plugin" layoutX="69.0" layoutY="55.0" mnemonicParsing="false" onAction="#addFileJarToDirectory" text="New plugin" />
                   <AnchorPane layoutX="1.0" layoutY="92.0" prefHeight="67.0" prefWidth="222.0" />
-                  <Button layoutX="146.0" layoutY="15.0" mnemonicParsing="false" onAction="#refreshAllPlugin" text="Refresh" />
+                  <Button layoutX="154.0" layoutY="15.0" mnemonicParsing="false" onAction="#refreshAllPlugin" text="Refresh" />
+                  <ScrollPane fx:id="ScrollPanePlugin" layoutY="104.0" prefHeight="451.0" prefWidth="224.0" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

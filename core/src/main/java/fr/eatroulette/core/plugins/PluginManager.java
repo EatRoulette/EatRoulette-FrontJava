@@ -22,7 +22,7 @@ public class PluginManager {
 
 
     public PluginManager(){
-        this.pluginFolder = new File("plugin/");
+        this.pluginFolder = new File("plugins/");
         this.loadAllJar();
     }
 
