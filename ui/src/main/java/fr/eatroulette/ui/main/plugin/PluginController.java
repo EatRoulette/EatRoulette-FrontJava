@@ -4,6 +4,7 @@ package fr.eatroulette.ui.main.plugin;
 import com.google.common.io.Files;
 import fr.eatroulette.core.plugins.PluginManager;
 import fr.eatroulette.ui.main.Router;
+import fr.eatroulette.ui.main.restaurant.RestaurantController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -100,12 +101,16 @@ public class PluginController extends Application {
         this.ScrollPanePlugin.setContent(root);
     }
 
-    void setRouter(final Router router) {
+    public void setRouter(final Router router) {
         this.router = router;
     }
 
     public static String getExtensionByGuava(String filename) {
         return Files.getFileExtension(filename);
+    }
+
+    public void goToRestaurant(){
+        this.router.<RestaurantController>goTo("Restaurant", controller -> controller.setRouter(router));
     }
 
     public static void main(String[] args) {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.restaurant.RestaurantController">
+  <children>
+    <AnchorPane fx:id="FormViewCreateRestaurant" maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="332.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Text layoutX="72.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" />
+            <Text layoutX="71.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="site" />
+            <TextField fx:id="nameFormField" layoutX="133.0" layoutY="52.0" />
+            <TextField fx:id="siteFormField" layoutX="133.0" layoutY="83.0" />
+            <Button layoutX="282.0" layoutY="254.0" mnemonicParsing="false" onAction="#SendFormCreateRestaurant" text="Submit" />
+            <Text layoutX="71.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="city" />
+            <TextField fx:id="cityFormField" layoutX="133.0" layoutY="115.0" />
+            <Text layoutX="69.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="address" />
+            <TextField fx:id="addressFormField" layoutX="133.0" layoutY="146.0" />
+            <TextField fx:id="postalCodeFormField" layoutX="133.0" layoutY="180.0" />
+            <Text layoutX="71.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="postalCode" />
+            <Text layoutX="70.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dep" />
+            <TextField fx:id="depFormField" layoutX="133.0" layoutY="216.0" />
+            <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" onAction="#ClearView" text="Cancel" />
+            <Text layoutX="133.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a Restaurant" wrappingWidth="148.79999999999995">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

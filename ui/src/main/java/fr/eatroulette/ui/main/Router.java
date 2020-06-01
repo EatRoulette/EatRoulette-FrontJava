@@ -27,7 +27,6 @@ public class Router {
 
     private <T> Parent loadView(final String viewName, final Consumer<T> controllerConsumer) {
         final var viewPath = String.format("/%sView.fxml", viewName);
-
         try {
             final var fxmlLoader = new FXMLLoader(this.getClass().getResource(viewPath));
             final Parent view = fxmlLoader.load();
