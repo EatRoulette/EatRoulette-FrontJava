@@ -1,5 +1,8 @@
 package fr.eatroulette.core.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RestaurantModel {
     private String id;
     private String name;
@@ -8,6 +11,7 @@ public class RestaurantModel {
     private String city;
     private String postalCode;
     private String dep;
+    private List<TypeModel> types;
 
     public RestaurantModel(){
         this.name = "";
@@ -35,6 +39,18 @@ public class RestaurantModel {
         this.city = city;
         this.postalCode = postalCode;
         this.dep = dep;
+        this.types = new ArrayList<TypeModel>();
+    }
+
+    public RestaurantModel(String id, String name, String site, String address, String city, String postalCode, String dep, List<TypeModel> types) {
+        this.id = id;
+        this.name = name;
+        this.site = site;
+        this.address = address;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.dep = dep;
+        this.types = types;
     }
 
     public String toJSON(){
@@ -74,6 +90,18 @@ public class RestaurantModel {
 
     public String getDep() {
         return dep;
+    }
+
+    public void addType(TypeModel type){
+        this.types.add(type);
+    }
+
+    public void delType(TypeModel type){
+        this.types.remove(type);
+    }
+
+    public List<TypeModel> getTypes() {
+        return types;
     }
 
 }

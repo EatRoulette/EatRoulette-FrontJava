@@ -15,17 +15,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller to communicate with our API
+ */
 public class TypeController {
 
-    public static void main(String[] args) {
-        TypeModel typeModel1 = new TypeModel("Chinois");
-        System.out.println(TypeController.addType(typeModel1));
-        List<TypeModel> types =TypeController.getAllTypes();
-        for(TypeModel typeModel: types){
-            System.out.println(typeModel.getName()+" "+typeModel.getId());
-        }
-    }
-
+    /**
+     * Add a type
+     * @param typeModel
+     * @return
+     */
     public static TypeModel addType(TypeModel typeModel) {
         TypeModel type = new TypeModel();
         try {
@@ -63,6 +62,11 @@ public class TypeController {
         return type;
     }
 
+    /**
+     * Update the type
+     * @param typeModel
+     * @return
+     */
     public static TypeModel updateType(TypeModel typeModel) {
         TypeModel type = new TypeModel();
         try {
@@ -101,6 +105,11 @@ public class TypeController {
         return type;
     }
 
+    /**
+     * Delete a type
+     * @param typeModel
+     * @return
+     */
     public static boolean deleteType(TypeModel typeModel){
         boolean deleted = false;
 
@@ -128,6 +137,10 @@ public class TypeController {
         return deleted;
     }
 
+    /**
+     * Get all types
+     * @return
+     */
     public static List<TypeModel> getAllTypes(){
         List<TypeModel> types = new ArrayList<TypeModel>();
 
@@ -160,7 +173,14 @@ public class TypeController {
         return types;
     }
 
-
+    public static void main(String[] args) {
+//        TypeModel typeModel1 = new TypeModel("Chinois");
+//        System.out.println(TypeController.addType(typeModel1));
+        List<TypeModel> types =TypeController.getAllTypes();
+        for(TypeModel typeModel: types){
+            System.out.println(typeModel.getName()+" "+typeModel.getId());
+        }
+    }
 
 
 }

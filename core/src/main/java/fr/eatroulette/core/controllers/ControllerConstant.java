@@ -1,5 +1,8 @@
 package fr.eatroulette.core.controllers;
 
+/**
+ * Constants of controllers
+ */
 public class ControllerConstant {
 
     public static final String API_URL = "https://whispering-cove-53853.herokuapp.com";
