@@ -12,6 +12,8 @@ public class RestaurantModel {
     private String postalCode;
     private String dep;
     private List<TypeModel> types;
+    private List<AllergenModel> allergens;
+    private List<CharacteristicModel> characteristics;
 
     public RestaurantModel(){
         this.name = "";
@@ -40,9 +42,13 @@ public class RestaurantModel {
         this.postalCode = postalCode;
         this.dep = dep;
         this.types = new ArrayList<TypeModel>();
+        this.allergens = new ArrayList<AllergenModel>();
+        this.characteristics = new ArrayList<CharacteristicModel>();
     }
 
-    public RestaurantModel(String id, String name, String site, String address, String city, String postalCode, String dep, List<TypeModel> types) {
+    public RestaurantModel(String id, String name, String site, String address,
+                           String city, String postalCode, String dep,
+                           List<TypeModel> types, List<AllergenModel> allergens, List<CharacteristicModel> characteristics) {
         this.id = id;
         this.name = name;
         this.site = site;
@@ -51,6 +57,8 @@ public class RestaurantModel {
         this.postalCode = postalCode;
         this.dep = dep;
         this.types = types;
+        this.allergens = allergens;
+        this.characteristics = characteristics;
     }
 
     public String toJSON(){
@@ -102,6 +110,30 @@ public class RestaurantModel {
 
     public List<TypeModel> getTypes() {
         return types;
+    }
+
+    public void addAllergen(AllergenModel allergen){
+        this.allergens.add(allergen);
+    }
+
+    public void delAllergen(AllergenModel allergen){
+        this.allergens.remove(allergen);
+    }
+
+    public List<AllergenModel> getAllergens() {
+        return allergens;
+    }
+
+    public void addCharacteristic(CharacteristicModel characteristic){
+        this.characteristics.add(characteristic);
+    }
+
+    public void delCharacteristic(CharacteristicModel characteristic){
+        this.characteristics.remove(characteristic);
+    }
+
+    public List<CharacteristicModel> getCharacteristics() {
+        return characteristics;
     }
 
 }

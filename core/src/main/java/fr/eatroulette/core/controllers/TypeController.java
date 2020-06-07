@@ -173,14 +173,4 @@ public class TypeController {
         return types;
     }
 
-    public static void main(String[] args) {
-//        TypeModel typeModel1 = new TypeModel("Chinois");
-//        System.out.println(TypeController.addType(typeModel1));
-        List<TypeModel> types =TypeController.getAllTypes();
-        for(TypeModel typeModel: types){
-            System.out.println(typeModel.getName()+" "+typeModel.getId());
-        }
-    }
-
-
 }

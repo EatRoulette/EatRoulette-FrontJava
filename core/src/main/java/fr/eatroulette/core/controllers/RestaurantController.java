@@ -1,5 +1,7 @@
 package fr.eatroulette.core.controllers;
 
+import fr.eatroulette.core.models.AllergenModel;
+import fr.eatroulette.core.models.CharacteristicModel;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
 import org.json.JSONArray;
@@ -188,6 +190,22 @@ public class RestaurantController {
                     typesList.add(t);
                 }
 
+                JSONArray allergens = (JSONArray) jsonObject.get("allergens");
+                List<AllergenModel> allergensList = new ArrayList<AllergenModel>();
+                for(int y = 0; y < allergens.length(); y++){
+                    JSONObject jsonType = allergens.getJSONObject(y);
+                    AllergenModel a = new AllergenModel((String) jsonType.get("name"));
+                    allergensList.add(a);
+                }
+
+                JSONArray characteristics = (JSONArray) jsonObject.get("characteristics");
+                List<CharacteristicModel> characteristicsList = new ArrayList<CharacteristicModel>();
+                for(int y = 0; y < characteristics.length(); y++){
+                    JSONObject jsonType = characteristics.getJSONObject(y);
+                    CharacteristicModel c = new CharacteristicModel((String) jsonType.get("name"));
+                    characteristicsList.add(c);
+                }
+
                 RestaurantModel restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                                                                  (String) jsonObject.get("name"),
                                                                  (String) jsonObject.get("site"),
@@ -195,7 +213,7 @@ public class RestaurantController {
                                                                  (String) jsonObject.get("city"),
                                                                  (String) jsonObject.get("postalCode"),
                                                                  (String) jsonObject.get("dep"),
-                                                                  typesList);
+                                                                  typesList, allergensList, characteristicsList);
                 restaurants.add(restaurant);
             }
             conn.disconnect();
@@ -288,8 +306,6 @@ public class RestaurantController {
             e.printStackTrace();
         }
         return restaurant;
-
-
     }
 
     /**
@@ -307,6 +323,205 @@ public class RestaurantController {
         return false;
     }
 
+    /**
+     * Check if the restaurant contain the characteristic
+     * @param restaurantModel
+     * @param characteristicModel
+     * @return
+     */
+    public static boolean isRestaurantContainCharac(RestaurantModel restaurantModel,CharacteristicModel characteristicModel){
+        for (CharacteristicModel t: restaurantModel.getCharacteristics()){
+            if(t.getName().equals(characteristicModel.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the restaurant contain the Allergen
+     * @param restaurantModel
+     * @param allergenModel
+     * @return
+     */
+    public static boolean isRestaurantContainAllergen(RestaurantModel restaurantModel, AllergenModel allergenModel){
+        for (AllergenModel a: restaurantModel.getAllergens()){
+            if(a.getName().equals(allergenModel.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add allergen to restaurant
+     * @param restaurantModel
+     * @param allergenModel
+     * @return
+     */
+    public static RestaurantModel addAllergenToRestaurant(RestaurantModel restaurantModel, AllergenModel allergenModel){
+        if (RestaurantController.isRestaurantContainAllergen(restaurantModel, allergenModel)){
+            return restaurantModel;
+        }
+
+        RestaurantModel restaurant = new RestaurantModel();
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/allergen/restaurant/"+restaurantModel.getId());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.POST);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            String input = String.format("{\"idAllergen\": \"%s\"}", allergenModel.getId());
+
+            OutputStream os = conn.getOutputStream();
+            os.write(input.getBytes());
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            restaurantModel.addAllergen(allergenModel);
+            restaurant = restaurantModel;
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return restaurant;
+    }
+
+    /**
+     * Delete allergen of a restaurant
+     * @param restaurantModel
+     * @param allergenModel
+     * @return
+     */
+    public static RestaurantModel deleteAllergenToRestaurant(RestaurantModel restaurantModel, AllergenModel allergenModel){
+        if (!RestaurantController.isRestaurantContainAllergen(restaurantModel, allergenModel)){
+            return restaurantModel;
+        }
+
+        RestaurantModel restaurant = new RestaurantModel();
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/allergen/restaurant/"+restaurantModel.getId());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.DELETE);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            String input = String.format("{\"idAllergen\": \"%s\"}", allergenModel.getId());
+
+            OutputStream os = conn.getOutputStream();
+            os.write(input.getBytes());
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            restaurantModel.delAllergen(allergenModel);
+            restaurant = restaurantModel;
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return restaurant;
+    }
+
+    /**
+     * Add characteristic to a restaurant
+     * @param restaurantModel
+     * @param characteristicModel
+     * @return
+     */
+    public static RestaurantModel addCharacteristicToRestaurant(RestaurantModel restaurantModel, CharacteristicModel characteristicModel){
+        if (RestaurantController.isRestaurantContainCharac(restaurantModel, characteristicModel)){
+            return restaurantModel;
+        }
+
+        RestaurantModel restaurant = new RestaurantModel();
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/characteristic/restaurant/"+restaurantModel.getId());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.POST);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            String input = String.format("{\"idCharac\": \"%s\"}", characteristicModel.getId());
+
+            OutputStream os = conn.getOutputStream();
+            os.write(input.getBytes());
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            restaurantModel.addCharacteristic(characteristicModel);
+            restaurant = restaurantModel;
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return restaurant;
+    }
+
+    /**
+     * Delete characteristic to of a restaurant
+     * @param restaurantModel
+     * @param characteristicModel
+     * @return
+     */
+    public static RestaurantModel deleteCharacteristicToRestaurant(RestaurantModel restaurantModel, CharacteristicModel characteristicModel){
+        if (!RestaurantController.isRestaurantContainCharac(restaurantModel, characteristicModel)){
+            return restaurantModel;
+        }
+
+        RestaurantModel restaurant = new RestaurantModel();
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/characteristic/restaurant/"+restaurantModel.getId());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.DELETE);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            String input = String.format("{\"idCharac\": \"%s\"}", characteristicModel.getId());
+
+            OutputStream os = conn.getOutputStream();
+            os.write(input.getBytes());
+            os.flush();
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            restaurantModel.delCharacteristic(characteristicModel);
+            restaurant = restaurantModel;
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return restaurant;
+    }
 
     public static void main(String[] args) {
 //        RestaurantModel restaurantModel = new RestaurantModel("5ed535234d114b002471b49b", "TESTFORDELETE2", "TESTS", "----", "PARIS", "75012", "75");
@@ -320,11 +535,13 @@ public class RestaurantController {
                 System.out.println(t.getName());
             }
         }
-        RestaurantModel restaurantModel = restaurants.get(0);
-        System.out.println(restaurantModel.getName());
-        RestaurantModel result = RestaurantController.deleteTypeToRestaurant(restaurantModel, typeModel);
-        System.out.println(result.getName());
+//        RestaurantModel restaurantModel = restaurants.get(0);
+//        System.out.println(restaurantModel.getName());
+//        RestaurantModel result = RestaurantController.deleteTypeToRestaurant(restaurantModel, typeModel);
+//        System.out.println(result.getName());
 
     }
+
+
 
 }
