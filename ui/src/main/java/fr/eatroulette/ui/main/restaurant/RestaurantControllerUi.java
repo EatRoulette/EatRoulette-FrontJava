@@ -1,5 +1,7 @@
 package fr.eatroulette.ui.main.restaurant;
 
+import fr.eatroulette.core.controllers.RestaurantController;
+import fr.eatroulette.core.models.RestaurantModel;
 import javafx.scene.control.TextField;
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
@@ -30,8 +32,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
-public class RestaurantController extends Application {
+public class RestaurantControllerUi extends Application {
 
     public TextField nameFormField;
     public TextField siteFormField;
@@ -63,39 +66,45 @@ public class RestaurantController extends Application {
     }
 
     public void SendFormCreateRestaurant(){
-        JSONObject JsonformRestaurant = new JSONObject();
-        JsonformRestaurant = this.verifInput(JsonformRestaurant);
-        System.out.println(JsonformRestaurant);
-        //TODO: request vers l'api CreateRestaurant
+        RestaurantModel restaurant = this.collectFormRestaurantCreator();
+        RestaurantController.addRestaurant(restaurant);
     }
 
-    public JSONObject verifInput(JSONObject jsonObject){
+    public RestaurantModel collectFormRestaurantCreator(){
         //TODO: L'api fait deja les test
+        String name = "";
+        String site = "";
+        String city = "";
+        String address = "";
+        String postalCode = "";
+        String dep = "";
+
+
         if(!nameFormField.getText().isEmpty()){
-            jsonObject.put("name", nameFormField.getText());
+             name = nameFormField.getText();
         }
 
         if(!siteFormField.getText().isEmpty()){
-            jsonObject.put("site", siteFormField.getText());
+            site = siteFormField.getText();
         }
 
         if(!cityFormField.getText().isEmpty()){
-            jsonObject.put("city", cityFormField.getText());
+            city = cityFormField.getText();
         }
 
         if(!addressFormField.getText().isEmpty()){
-            jsonObject.put("address", addressFormField.getText());
+            address = addressFormField.getText();
         }
 
         if(!postalCodeFormField.getText().isEmpty()){
-            jsonObject.put("postalCode", postalCodeFormField.getText());
+            postalCode = postalCodeFormField.getText();
         }
 
         if(!depFormField.getText().isEmpty()){
-            jsonObject.put("dep", depFormField.getText());
+            dep = depFormField.getText();
         }
 
-        return jsonObject;
+        return new RestaurantModel(name, site, city, address, postalCode, dep);
     }
 
     public void ClearView(){
@@ -103,43 +112,14 @@ public class RestaurantController extends Application {
     }
 
     public void RenderAllRestaurant(){
-        //TODO: request vers l'api getAllRestaurant
-        String jsonString = "{ \"allRestaurant\":[\n" +
-                "    {\n" +
-                "    \"_id\" : \"\",\n" +
-                "    \"types\" : [],\n" +
-                "    \"allergens\" : [],\n" +
-                "    \"characteristics\" : [],\n" +
-                "    \"name\" : \"rere al taglio\",\n" +
-                "    \"site\" : \"----\",\n" +
-                "    \"address\" : \"27 Rue Erard\",\n" +
-                "    \"city\" : \"PARIS\",\n" +
-                "    \"postalCode\" : \"75012\",\n" +
-                "    \"dep\" : \"75\",\n" +
-                "    \"__v\" : 0\n" +
-                "    },\n" +
-                "    {\n" +
-                "    \"_id\" : \"\",\n" +
-                "    \"types\" : [],\n" +
-                "    \"name\" : \"zerzer al taglio\",\n" +
-                "    \"site\" : \"----\",\n" +
-                "    \"address\" : \"27 Rue Erard\",\n" +
-                "    \"city\" : \"PARIS\",\n" +
-                "    \"postalCode\" : \"75012\",\n" +
-                "    \"dep\" : \"75\",\n" +
-                "    \"_idSituation\" : \"---\",\n" +
-                "    \"__v\" : 0\n" +
-                "    }]\n" +
-                "}";
-        JSONObject jsonAllRestaurants = new JSONObject(jsonString);
+        List <RestaurantModel> restaurants = RestaurantController.getAllRestaurants();
         VBox restaurantsRoot = new VBox();
         // ClearView
         RestaurantBox.getChildren().clear();
-        JSONArray restaurants = jsonAllRestaurants.getJSONArray("allRestaurant");
 
-        for (int i = 0; i < restaurants.length(); i++){
-            JSONObject restaurant = restaurants.getJSONObject(i);
-            Button renderButton = new Button(restaurant.getString("name"));
+        for (int i = 0; i < restaurants.size(); i++){
+            RestaurantModel restaurant = restaurants.get(i);
+            Button renderButton = new Button(restaurant.getName());
             renderButton.setOnAction(click -> {
                     try {
                         RestaurantBox.getChildren().clear();

@@ -2,31 +2,25 @@ package fr.eatroulette.ui.main.plugin;
 
 
 import com.google.common.io.Files;
-import fr.eatroulette.core.plugins.PluginManager;
+import fr.eatroulette.core.plugin.PluginManager;
 import fr.eatroulette.ui.main.Router;
-import fr.eatroulette.ui.main.restaurant.RestaurantController;
+import fr.eatroulette.ui.main.restaurant.RestaurantControllerUi;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -110,7 +104,7 @@ public class PluginController extends Application {
     }
 
     public void goToRestaurant(){
-        this.router.<RestaurantController>goTo("Restaurant", controller -> controller.setRouter(router));
+        this.router.<RestaurantControllerUi>goTo("Restaurant", controller -> controller.setRouter(router));
     }
 
     public static void main(String[] args) {
