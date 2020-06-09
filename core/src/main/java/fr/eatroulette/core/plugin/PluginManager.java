@@ -1,5 +1,6 @@
-package fr.eatroulette.core.plugins;
+package fr.eatroulette.core.plugin;
 
+import fr.eatroulette.core.plugin.EatRoulettePlugin;
 import fr.eatroulette.core.plugin.PluginManagerConfig;
 
 import java.io.File;
@@ -93,6 +94,10 @@ public class PluginManager {
                     Constructor<?> loadedClassContructor = loadedClass.getConstructor();
 
                     Object instanceOfLodadClass = loadedClassContructor.newInstance();
+
+                    // instanceOfLodadClass.getClass().getInterfaces()
+                    // if(instanceOfLodadClass instanceof EatRoulettePlugin)
+
                     Method method = loadedClass.getMethod("getName");
 
                     String name = (String) method.invoke(instanceOfLodadClass);
@@ -103,4 +108,6 @@ public class PluginManager {
             }
         }
     }
+
+
 }
