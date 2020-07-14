@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * This plugin manager class can load and run plugins
+ */
 public class PluginManager {
     private HashMap<String, File> hashMap = new HashMap<String, File>();
     private File pluginFolder;
@@ -86,28 +89,25 @@ public class PluginManager {
 
         while (enumeration.hasMoreElements()) {
             JarEntry entry = enumeration.nextElement();
+            // Filter on ".class"
             if(entry.getName().endsWith(".class")){
+                //Get FQN (example fr.eatroulette.test.myClass)
                 className = entry.getName().substring(0, entry.getName().length() - 6).replace("/", ".");
 
-                if(className.equals("Test")){
+                if(className.endsWith(PluginManagerConfig.PLUGIN_CLASS)){
                     Class<?> loadedClass = Class.forName(className, true, classLoader);
                     Constructor<?> loadedClassContructor = loadedClass.getConstructor();
 
                     Object instanceOfLodadClass = loadedClassContructor.newInstance();
 
-                    // instanceOfLodadClass.getClass().getInterfaces()
-                    // if(instanceOfLodadClass instanceof EatRoulettePlugin)
+                    Method method = loadedClass.getMethod(PluginManagerConfig.PLUGIN_METHOD);
 
-                    Method method = loadedClass.getMethod("getName");
-
-                    String name = (String) method.invoke(instanceOfLodadClass);
-
-                    System.out.println("REFLECT NAME : " + name);
+                    //Run plugin method
+                    method.invoke(instanceOfLodadClass);
                 }
                 System.out.println("Found class => "+entry.getName());
             }
         }
     }
-
 
 }
