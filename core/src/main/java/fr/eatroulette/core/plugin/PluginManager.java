@@ -1,8 +1,5 @@
 package fr.eatroulette.core.plugin;
 
-import fr.eatroulette.core.plugin.EatRoulettePlugin;
-import fr.eatroulette.core.plugin.PluginManagerConfig;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -79,7 +76,6 @@ public class PluginManager {
         File f = this.hashMap.get(pluginName);
 
         URL url = f.toURI().toURL(); //Because File.toURL is deprecated and the doc tell to do like this
-        System.out.println(url.toString());
         //Init classLoader
         ClassLoader classLoader = new URLClassLoader(new URL[] {url}, getClass().getClassLoader());
 
@@ -105,7 +101,6 @@ public class PluginManager {
                     //Run plugin method
                     method.invoke(instanceOfLodadClass);
                 }
-                System.out.println("Found class => "+entry.getName());
             }
         }
     }
