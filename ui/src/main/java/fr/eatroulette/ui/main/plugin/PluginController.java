@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,13 +31,21 @@ public class PluginController extends Application {
     PluginManager p1Manager = new PluginManager();
     private Stage stage;
     private Router router;
+    private String LOGO_URL_64 = "https://i.ibb.co/s6tQ5bB/Eat-Roulette-logo-64.png";
+    private String LOGO_URL_32 = "https://i.ibb.co/0jsyNT9/Eat-Roulette-logo-32.png";
+    private String LOGO_URL_16 = "https://i.ibb.co/yng1L8K/Eat-Roulette-logo-16.png";
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         this.router = new Router(stage);
         router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
-        stage.setTitle("Plugin Manager");
+        stage.setTitle("EatRoulette Admin Application");
+        stage.getIcons().addAll(
+                new Image(LOGO_URL_64),
+                new Image(LOGO_URL_32),
+                new Image(LOGO_URL_16)
+        );
         stage.show();
     }
 

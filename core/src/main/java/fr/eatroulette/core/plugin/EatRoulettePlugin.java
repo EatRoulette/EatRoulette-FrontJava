@@ -7,12 +7,6 @@ package fr.eatroulette.core.plugin;
 public interface EatRoulettePlugin {
 
     /**
-     * Get the plugin name
-     * @return
-     */
-    String getPluginName();
-
-    /**
      * Run
      */
     void run();
