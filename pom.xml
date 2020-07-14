@@ -7,7 +7,7 @@
     <groupId>fr.eatroulette</groupId>
     <artifactId>EatRoulette-FrontJava</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
         <module>cli</module>
