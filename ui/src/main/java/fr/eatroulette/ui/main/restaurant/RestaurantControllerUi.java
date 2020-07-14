@@ -1,49 +1,56 @@
 package fr.eatroulette.ui.main.restaurant;
 
 import fr.eatroulette.core.controllers.RestaurantController;
+import fr.eatroulette.core.controllers.TypeController;
 import fr.eatroulette.core.models.RestaurantModel;
-import javafx.scene.control.TextField;
+import fr.eatroulette.core.models.TypeModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Iterator;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class RestaurantControllerUi extends Application {
+public class RestaurantControllerUi extends Application /*implements Initializable*/ {
 
+    @FXML
     public TextField nameFormField;
+    @FXML
     public TextField siteFormField;
+    @FXML
     public TextField cityFormField;
+    @FXML
     public TextField addressFormField;
+    @FXML
     public TextField postalCodeFormField;
+    @FXML
     public TextField depFormField;
+    @FXML
     public AnchorPane FormViewCreateRestaurant;
+    @FXML
     public AnchorPane RestaurantBox;
+    @FXML
+    public ComboBox<String> comboRestaurant;
+    @FXML
+    public ComboBox comboType;
     private Stage stage;
     private Router router;
     @FXML
@@ -55,6 +62,10 @@ public class RestaurantControllerUi extends Application {
 
     public Text siteFieldRestaurant;
 
+    private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
+    private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
+    private List<String> listRestaurantName = new ArrayList<String>();
+    private List<String> listTypeName = new ArrayList<String>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -139,7 +150,41 @@ public class RestaurantControllerUi extends Application {
         this.setDataPane(restaurantsRoot);
     }
 
+    public void RenderFromAddTypeRestaurant() throws IOException, InterruptedException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddTypeView.fxml")));
+    }
 
+    /**
+     * Load restaurants and types
+     */
+    private void loadRestaurantTypeInformation(){
+        this.hashMapRestaurant.clear();
+        this.listRestaurantName.clear();
+
+        List<RestaurantModel> restaurants = RestaurantController.getAllRestaurants();
+        for(RestaurantModel r : restaurants){
+            this.listRestaurantName.add(r.getName());
+            this.hashMapRestaurant.put(r.getName(), r);
+        }
+        System.out.println(this.listRestaurantName);
+        this.listTypeName.clear();
+        this.hashMapType.clear();
+        List<TypeModel> types = TypeController.getAllTypes();
+        for(TypeModel t : types){
+            this.listTypeName.add(t.getName());
+            this.hashMapType.put(t.getName(), t);
+        }
+        System.out.println(this.listTypeName);
+    }
+
+    public void sendFormAddType(){
+        RestaurantModel r = this.hashMapRestaurant.get(comboRestaurant.getValue());
+        TypeModel t = this.hashMapType.get(comboType.getValue());
+        r = RestaurantController.addTypeToRestaurant(r, t);
+        if (!r.getName().isEmpty()){
+            this.ClearView();
+        }
+    }
 
     public void goToPlugin(){
         this.router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
@@ -151,5 +196,11 @@ public class RestaurantControllerUi extends Application {
 
     public void setRouter(final Router router) {
         this.router = router;
+    }
+
+    public void loadBoxes(){
+        this.loadRestaurantTypeInformation();
+        comboRestaurant.setItems(FXCollections.observableArrayList(this.listRestaurantName));
+        comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 }
