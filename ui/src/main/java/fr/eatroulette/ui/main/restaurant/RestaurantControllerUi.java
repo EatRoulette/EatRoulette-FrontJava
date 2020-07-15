@@ -55,6 +55,9 @@ public class RestaurantControllerUi extends Application {
     public ComboBox comboType;
     @FXML
     public ComboBox comboCharac;
+    @FXML
+    public ComboBox comboAllergen;
+
     private Stage stage;
     private Router router;
     @FXML
@@ -75,9 +78,11 @@ public class RestaurantControllerUi extends Application {
     private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
     private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
     private HashMap<String, CharacteristicModel> hashMapCharac = new HashMap<String, CharacteristicModel>();
+    private HashMap<String, AllergenModel> hashMapAllergen = new HashMap<String, AllergenModel>();
     private List<String> listRestaurantName = new ArrayList<String>();
     private List<String> listTypeName = new ArrayList<String>();
     private List<String> listCharacName = new ArrayList<String>();
+    private List<String> listAllergenName = new ArrayList<String>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -208,10 +213,26 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
-     * Load update
+     * Load update Allergen
      */
-    public void loadUpdateAllergenForm(){
+    public void loadUpdateAllergenForm() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateAllergenView.fxml")));
+    }
 
+    public void loadAllergenBoxes(){
+        this.loadAllergens();
+        comboAllergen.setItems(FXCollections.observableArrayList(this.listAllergenName));
+    }
+
+    public void updateAllergen(){
+        AllergenModel old = this.hashMapAllergen.get(this.comboAllergen.getValue());
+        String newName = this.allergenNameField.getText();
+        if (!newName.isEmpty() || !newName.isBlank()){
+            AllergenModel a = new AllergenModel(old.getId(), this.allergenNameField.getText());
+            if (!AllergenController.updateAllergen(a).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
     }
 
     /**
@@ -391,6 +412,17 @@ public class RestaurantControllerUi extends Application {
         for(TypeModel t : types){
             this.listTypeName.add(t.getName());
             this.hashMapType.put(t.getName(), t);
+        }
+    }
+
+    private void loadAllergens(){
+        this.listAllergenName.clear();
+        this.hashMapAllergen.clear();
+
+        List<AllergenModel> allergenModelList = AllergenController.getAllAllergens();
+        for (AllergenModel a : allergenModelList){
+            this.listAllergenName.add(a.getName());
+            this.hashMapAllergen.put(a.getName(), a);
         }
     }
 
