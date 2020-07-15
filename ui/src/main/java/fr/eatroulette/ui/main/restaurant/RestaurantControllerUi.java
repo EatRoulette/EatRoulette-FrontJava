@@ -1,7 +1,9 @@
 package fr.eatroulette.ui.main.restaurant;
 
+import fr.eatroulette.core.controllers.CharacteristicController;
 import fr.eatroulette.core.controllers.RestaurantController;
 import fr.eatroulette.core.controllers.TypeController;
+import fr.eatroulette.core.models.CharacteristicModel;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
 import javafx.collections.FXCollections;
@@ -59,6 +61,8 @@ public class RestaurantControllerUi extends Application {
 
     @FXML
     public TextField typeNameField;
+    @FXML
+    public TextField characNameField;
 
     private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
     private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
@@ -156,6 +160,11 @@ public class RestaurantControllerUi extends Application {
      * Load restaurants and types
      */
     private void loadRestaurantTypeInformation(){
+        this.loadRestaurants();
+        this.loadTypes();
+    }
+
+    private void loadRestaurants(){
         this.hashMapRestaurant.clear();
         this.listRestaurantName.clear();
 
@@ -164,6 +173,9 @@ public class RestaurantControllerUi extends Application {
             this.listRestaurantName.add(r.getName());
             this.hashMapRestaurant.put(r.getName(), r);
         }
+    }
+
+    private void loadTypes(){
         this.listTypeName.clear();
         this.hashMapType.clear();
         List<TypeModel> types = TypeController.getAllTypes();
@@ -203,12 +215,26 @@ public class RestaurantControllerUi extends Application {
     public void loadTypeForm()throws IOException {
         setDataPane(FXMLLoader.load(getClass().getResource("/AddTypeView.fxml")));
     }
-    
+
     public void saveType(){
         String typeName = this.typeNameField.getText();
         if(!typeName.isEmpty() || !typeName.isBlank()) {
             TypeModel type = new TypeModel(typeName);
             if (!TypeController.addType(type).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
+    }
+
+    public void loadCharacForm() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/AddCharacView.fxml")));
+    }
+
+    public void saveCharac(){
+        String characName = this.characNameField.getText();
+        if(!characName.isEmpty() && !characName.isBlank()){
+            CharacteristicModel c = new CharacteristicModel(characName);
+            if(!CharacteristicController.addCharacteristic(c).getId().isEmpty()){
                 this.ClearView();
             }
         }
