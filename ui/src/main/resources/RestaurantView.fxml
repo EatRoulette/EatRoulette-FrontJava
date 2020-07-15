@@ -26,7 +26,7 @@
                   <Button layoutX="43.0" layoutY="55.0" mnemonicParsing="false" onAction="#RenderFormCreateRestaurant" text="Create new Restaurant" />
                   <Button layoutX="43.0" layoutY="134.0" mnemonicParsing="false" onAction="#RenderAllRestaurant" prefHeight="26.0" prefWidth="136.0" text="View all Restaurant" />
                   <Button layoutX="43.0" layoutY="94.0" mnemonicParsing="false" onAction="#RenderFromAddTypeRestaurant" text="Add type to restaurant" />
-                  <Label alignment="CENTER" layoutX="81.0" layoutY="182.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutX="80.0" layoutY="197.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x11" />
                      </font>
@@ -34,6 +34,7 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
+                  <Button layoutX="43.0" layoutY="237.0" mnemonicParsing="false" onAction="#loadTypeForm" text="Create new Restaurant" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

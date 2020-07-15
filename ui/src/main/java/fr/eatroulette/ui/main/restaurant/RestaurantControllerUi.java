@@ -5,8 +5,6 @@ import fr.eatroulette.core.controllers.TypeController;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
@@ -23,13 +21,11 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class RestaurantControllerUi extends Application /*implements Initializable*/ {
+public class RestaurantControllerUi extends Application {
 
     @FXML
     public TextField nameFormField;
@@ -59,8 +55,10 @@ public class RestaurantControllerUi extends Application /*implements Initializab
     public TextField cityFieldRestaurant;
     public TextField addressFieldRestaurant;
     public TextField postalCodeFieldRestaurant;
-
     public Text siteFieldRestaurant;
+
+    @FXML
+    public TextField typeNameField;
 
     private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
     private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
@@ -150,7 +148,7 @@ public class RestaurantControllerUi extends Application /*implements Initializab
         this.setDataPane(restaurantsRoot);
     }
 
-    public void RenderFromAddTypeRestaurant() throws IOException, InterruptedException {
+    public void RenderFromAddTypeRestaurant() throws IOException {
         setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddTypeView.fxml")));
     }
 
@@ -166,7 +164,6 @@ public class RestaurantControllerUi extends Application /*implements Initializab
             this.listRestaurantName.add(r.getName());
             this.hashMapRestaurant.put(r.getName(), r);
         }
-        System.out.println(this.listRestaurantName);
         this.listTypeName.clear();
         this.hashMapType.clear();
         List<TypeModel> types = TypeController.getAllTypes();
@@ -174,7 +171,6 @@ public class RestaurantControllerUi extends Application /*implements Initializab
             this.listTypeName.add(t.getName());
             this.hashMapType.put(t.getName(), t);
         }
-        System.out.println(this.listTypeName);
     }
 
     public void sendFormAddType(){
@@ -190,7 +186,7 @@ public class RestaurantControllerUi extends Application /*implements Initializab
         this.router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
     }
 
-    public void setDataPane(Node node){
+    private void setDataPane(Node node){
         RestaurantBox.getChildren().setAll(node);
     }
 
@@ -202,5 +198,19 @@ public class RestaurantControllerUi extends Application /*implements Initializab
         this.loadRestaurantTypeInformation();
         comboRestaurant.setItems(FXCollections.observableArrayList(this.listRestaurantName));
         comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
+    }
+
+    public void loadTypeForm()throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/AddTypeView.fxml")));
+    }
+    
+    public void saveType(){
+        String typeName = this.typeNameField.getText();
+        if(!typeName.isEmpty() || !typeName.isBlank()) {
+            TypeModel type = new TypeModel(typeName);
+            if (!TypeController.addType(type).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
     }
 }
