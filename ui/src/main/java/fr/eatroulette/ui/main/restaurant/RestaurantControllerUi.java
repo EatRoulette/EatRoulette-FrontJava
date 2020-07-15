@@ -49,6 +49,8 @@ public class RestaurantControllerUi extends Application {
     public ComboBox<String> comboRestaurant;
     @FXML
     public ComboBox comboType;
+    @FXML
+    public ComboBox comboCharac;
     private Stage stage;
     private Router router;
     @FXML
@@ -66,8 +68,10 @@ public class RestaurantControllerUi extends Application {
 
     private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
     private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
+    private HashMap<String, CharacteristicModel> hashMapCharac = new HashMap<String, CharacteristicModel>();
     private List<String> listRestaurantName = new ArrayList<String>();
     private List<String> listTypeName = new ArrayList<String>();
+    private List<String> listCharacName = new ArrayList<String>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -185,6 +189,16 @@ public class RestaurantControllerUi extends Application {
         }
     }
 
+    private void loadCharcteristics(){
+        this.listCharacName.clear();
+        this.hashMapCharac.clear();
+        List<CharacteristicModel> characs = CharacteristicController.getAllCharacteristics();
+        for(CharacteristicModel c : characs){
+            this.listCharacName.add(c.getName());
+            this.hashMapCharac.put(c.getName(), c);
+        }
+    }
+
     public void sendFormAddType(){
         RestaurantModel r = this.hashMapRestaurant.get(comboRestaurant.getValue());
         TypeModel t = this.hashMapType.get(comboType.getValue());
@@ -237,6 +251,26 @@ public class RestaurantControllerUi extends Application {
             if(!CharacteristicController.addCharacteristic(c).getId().isEmpty()){
                 this.ClearView();
             }
+        }
+    }
+
+    public void renderFormAddCharacRestaurant() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddCharacView.fxml")));
+    }
+
+    public void loadRestaurantCharacBoxes(){
+        this.loadRestaurants();
+        this.loadCharcteristics();
+        comboRestaurant.setItems(FXCollections.observableArrayList(this.listRestaurantName));
+        comboCharac.setItems(FXCollections.observableArrayList(this.listCharacName));
+    }
+
+    public void sendFormAddCharac(){
+        RestaurantModel r = this.hashMapRestaurant.get(comboRestaurant.getValue());
+        CharacteristicModel c = this.hashMapCharac.get(comboCharac.getValue());
+        r = RestaurantController.addCharacteristicToRestaurant(r, c);
+        if (!r.getName().isEmpty()){
+            this.ClearView();
         }
     }
 }

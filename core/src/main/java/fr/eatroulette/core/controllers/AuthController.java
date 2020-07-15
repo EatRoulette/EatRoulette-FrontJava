@@ -84,7 +84,6 @@ public class AuthController {
             String output = br.readLine();
 
             JSONObject jsonObject = new JSONObject(output);
-            System.out.println(jsonObject);
 
             String type = (String) jsonObject.get("type");
 
