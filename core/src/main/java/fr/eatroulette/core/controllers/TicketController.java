@@ -18,6 +18,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class TicketController {
         List<TicketModel> tickets = new ArrayList<>();
 
         try {
-            URL url = new URL(ControllerConstant.API_URL+"/tickets");
+            URL url = new URL("http://localhost:3000/tickets");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
@@ -49,32 +50,28 @@ public class TicketController {
             JSONArray jsonArray = new JSONArray(output);
             for (int i = 0; i <jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                UserModel author = manageUser(jsonObject.getJSONObject("author"));
+                boolean hasAuthor = jsonObject.has("author");
+                UserModel author = hasAuthor ? manageUser(jsonObject.getJSONObject("author")) : null;
                 JSONArray jsonComments = jsonObject.getJSONArray("comments");
                 List<CommentModel> comments = new ArrayList<>();
                 for (int j = 0; j <jsonComments.length(); j++){
                     JSONObject jsonComment = jsonComments.getJSONObject(j);
-                    UserModel commentAuthor = manageUser(jsonComment.getJSONObject("author"));
                     CommentModel comment = new CommentModel(
-                            //String id, String message, UserModel author, LocalDate created_at
-                            jsonObject.get("_id").toString(),
-                            jsonObject.get("message").toString(),
-                            commentAuthor,
-                            manageDate(jsonObject.get("created_at").toString())
+                            jsonComment.get("message").toString()
                     );
                     comments.add(comment);
                 }
 
                 TicketModel ticket = new TicketModel(
-                        jsonObject.get("_id").toString(),
+                        jsonObject.get("id").toString(),
                         author,
                         jsonObject.get("title").toString(),
                         jsonObject.get("message").toString(),
                         jsonObject.get("status").toString(),
                         jsonObject.get("type").toString(),
-                        Integer.parseInt(jsonObject.get("emergency").toString()),
+                        0,
                         comments,
-                        manageDate(jsonObject.get("createdAt").toString())
+                        manageDate(jsonObject.get("created_at").toString())
                  );
                 tickets.add(ticket);
             }
@@ -94,7 +91,7 @@ public class TicketController {
         );
     }
     private static LocalDate manageDate(String date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         return LocalDate.parse(date, formatter);
     }
 

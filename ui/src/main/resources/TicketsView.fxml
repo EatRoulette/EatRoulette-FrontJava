@@ -26,13 +26,16 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
+            <Button layoutX="43.0" layoutY="55.0" mnemonicParsing="false" onAction="#displayOnlyBugTickets" text="Display only bug tickets" />
+            <Button layoutX="43.0" layoutY="93.0" mnemonicParsing="false" onAction="#displayOnlyDemandsTickets" text="Display only demands tickets" />
+            <Button layoutX="43.0" layoutY="131.0" mnemonicParsing="false" onAction="#displayTickets" text="Display all" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
-                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                <AnchorPane id="Content" fx:id="TicketsBox" minHeight="-1.0" minWidth="-1.0" prefHeight="550.0" prefWidth="442.0" />
               </children>
             </AnchorPane>
           </content>
