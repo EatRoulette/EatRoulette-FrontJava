@@ -246,8 +246,26 @@ public class RestaurantControllerUi extends Application {
     /**
      * Load form to delete a restaurant type
      */
-    public void renderFormDelTypeRestaurant(){
+    public void renderFormDelTypeRestaurant() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/DelTypeOfRestaurantView.fxml")));
+    }
 
+    public void loadTypeCombobox(){
+        this.loadTypesOfRestaurant();
+        comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
+    }
+
+    public void delTypeOfRestaurant(){
+        RestaurantModel r = this.hashMapRestaurant.get(this.comboRestaurant.getValue());
+        TypeModel t = this.hashMapType.get(this.comboType.getValue());
+        TypeModel tfull = TypeController.getAllTypes().stream()
+                .filter(type -> type.getName().equals(t.getName()))
+                .collect(Collectors.toList()).get(0);
+
+        r = RestaurantController.deleteTypeToRestaurant(r, tfull);
+        if (!r.getId().isEmpty()){
+            this.ClearView();
+        }
     }
 
     /**
@@ -321,6 +339,17 @@ public class RestaurantControllerUi extends Application {
         for(CharacteristicModel c : characs){
             this.listCharacName.add(c.getName());
             this.hashMapCharac.put(c.getName(), c);
+        }
+    }
+
+    private void loadTypesOfRestaurant(){
+        this.listTypeName.clear();
+        this.hashMapType.clear();
+        List<TypeModel> types = this.hashMapRestaurant.get(this.comboRestaurant.getValue()).getTypes();
+        for(TypeModel t : types){
+            System.out.println(t.getName());
+            this.listTypeName.add(t.getName());
+            this.hashMapType.put(t.getName(), t);
         }
     }
 
