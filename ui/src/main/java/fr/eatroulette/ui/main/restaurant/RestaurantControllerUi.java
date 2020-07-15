@@ -255,8 +255,19 @@ public class RestaurantControllerUi extends Application {
     /**
      * Load update type view
      */
-    public void loadUpdateTypeForm(){
+    public void loadUpdateTypeForm() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateTypeView.fxml")));
+    }
 
+    public void updateType() {
+        TypeModel old = this.hashMapType.get(this.comboType.getValue());
+        String newName = this.typeNameField.getText();
+        if (!newName.isEmpty() || !newName.isBlank()){
+            TypeModel a = new TypeModel(old.getId(), newName);
+            if (!TypeController.updateType(a).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
     }
 
     /**
@@ -314,7 +325,7 @@ public class RestaurantControllerUi extends Application {
     }
 
     public void loadTypeCombobox(){
-        this.loadTypesOfRestaurant();
+        this.loadTypes();
         comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 
