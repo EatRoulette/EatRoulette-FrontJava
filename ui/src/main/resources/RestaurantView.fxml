@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -23,10 +24,10 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button layoutX="43.0" layoutY="55.0" mnemonicParsing="false" onAction="#RenderFormCreateRestaurant" text="Create new Restaurant" />
-                  <Button layoutX="43.0" layoutY="173.0" mnemonicParsing="false" onAction="#RenderAllRestaurant" prefHeight="26.0" prefWidth="136.0" text="View all Restaurant" />
-                  <Button layoutX="43.0" layoutY="94.0" mnemonicParsing="false" onAction="#RenderFromAddTypeRestaurant" text="Add type to restaurant" />
-                  <Label alignment="CENTER" layoutX="80.0" layoutY="236.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
+                  <Button layoutX="43.0" layoutY="94.0" mnemonicParsing="false" onAction="#RenderFormCreateRestaurant" text="Create new Restaurant" />
+                  <Button layoutX="43.0" layoutY="54.0" mnemonicParsing="false" onAction="#RenderAllRestaurant" prefHeight="26.0" prefWidth="136.0" text="View all Restaurant" />
+                  <Button layoutX="43.0" layoutY="136.0" mnemonicParsing="false" onAction="#RenderFromAddTypeRestaurant" text="Add type to restaurant" />
+                  <Label alignment="CENTER" layoutX="80.0" layoutY="347.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x11" />
                      </font>
@@ -34,8 +35,8 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
-                  <Button layoutX="57.0" layoutY="277.0" mnemonicParsing="false" onAction="#loadTypeForm" text="Create new Type" />
-                  <Label alignment="CENTER" layoutX="54.0" layoutY="373.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Characteristics" textAlignment="CENTER" wrapText="false">
+                  <Button layoutX="57.0" layoutY="388.0" mnemonicParsing="false" onAction="#loadTypeForm" text="Create new Type" />
+                  <Label alignment="CENTER" layoutX="54.0" layoutY="469.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Characteristics" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x111" />
                      </font>
@@ -43,8 +44,13 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x211" />
                      </textFill>
                   </Label>
-                  <Button layoutX="43.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadCharacForm" text="Create new Characteristic" />
-                  <Button layoutX="19.0" layoutY="134.0" mnemonicParsing="false" onAction="#renderFormAddCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Add characteristic to restaurant" />
+                  <Button layoutX="34.0" layoutY="508.0" mnemonicParsing="false" onAction="#loadCharacForm" text="Create new Characteristic" />
+                  <Button layoutX="19.0" layoutY="218.0" mnemonicParsing="false" onAction="#renderFormAddCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Add characteristic to restaurant" />
+                  <Button layoutX="36.0" layoutY="177.0" mnemonicParsing="false" onAction="#renderFormDelTypeRestaurant" text="Delete type to restaurant" />
+                  <Button layoutX="20.0" layoutY="258.0" mnemonicParsing="false" onAction="#renderFormDelCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Del characteristic to restaurant" />
+                  <Separator layoutX="32.0" layoutY="34.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Separator layoutX="32.0" layoutY="372.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Separator layoutX="32.0" layoutY="491.0" prefHeight="13.0" prefWidth="158.0" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

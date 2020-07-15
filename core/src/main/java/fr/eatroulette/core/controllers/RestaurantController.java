@@ -523,17 +523,20 @@ public class RestaurantController {
     }
 
     public static void main(String[] args) {
-//        RestaurantModel restaurantModel = new RestaurantModel("5ed535234d114b002471b49b", "TESTFORDELETE2", "TESTS", "----", "PARIS", "75012", "75");
+        RestaurantModel restaurantModel = new RestaurantModel("5ed527bc4d114b002471b499", "TESTFORDELETE2", "TESTS", "----", "PARIS", "75012", "75");
 //        boolean result = RestaurantController.deleteRestaurant(restaurantModel);
 //        System.out.println(result);
-        TypeModel typeModel = new TypeModel( "5edb978cd1959e0024b7df7a", "Chinois");
-        List<RestaurantModel> restaurants = getAllRestaurants();
-        for (RestaurantModel restaurant: restaurants){
-            System.out.println(restaurant.getId()+" "+restaurant.getName());
-            for (TypeModel t: restaurant.getTypes()){
-                System.out.println(t.getName());
-            }
-        }
+        CharacteristicModel c = new CharacteristicModel( "5f0ef4d6094b6400244cfb61", "PMR");
+        restaurantModel = deleteCharacteristicToRestaurant(restaurantModel, c);
+        System.out.println(restaurantModel.getId());
+
+        //        List<RestaurantModel> restaurants = getAllRestaurants();
+//        for (RestaurantModel restaurant: restaurants){
+//            System.out.println(restaurant.getId()+" "+restaurant.getName());
+//            for (TypeModel t: restaurant.getTypes()){
+//                System.out.println(t.getName());
+//            }
+//        }
 //        RestaurantModel restaurantModel = restaurants.get(0);
 //        System.out.println(restaurantModel.getName());
 //        RestaurantModel result = RestaurantController.deleteTypeToRestaurant(restaurantModel, typeModel);

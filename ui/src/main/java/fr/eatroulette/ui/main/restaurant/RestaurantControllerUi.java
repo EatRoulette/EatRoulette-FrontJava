@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RestaurantControllerUi extends Application {
 
@@ -243,6 +244,43 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
+     * Load form to delete a restaurant type
+     */
+    public void renderFormDelTypeRestaurant(){
+
+    }
+
+    /**
+     * Load form to delete a restaurant characteristic
+     */
+    public void renderFormDelCharacRestaurant() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/DelCharacOfRestaurantView.fxml")));
+    }
+
+    public void loadRestaurantComboBox(){
+        this.loadRestaurants();
+        comboRestaurant.setItems(FXCollections.observableArrayList(this.listRestaurantName));
+    }
+
+    public void loadCharacteristicCombobox(){
+        this.loadCharacOfRestaurant();
+        comboCharac.setItems(FXCollections.observableArrayList(this.listCharacName));
+    }
+
+    public void delCharacteristicOfRestaurant(){
+        RestaurantModel r = this.hashMapRestaurant.get(this.comboRestaurant.getValue());
+        CharacteristicModel c = this.hashMapCharac.get(this.comboCharac.getValue());
+        CharacteristicModel cfull = CharacteristicController.getAllCharacteristics().stream()
+                .filter(characteristicModel -> characteristicModel.getName().equals(c.getName()))
+                .collect(Collectors.toList()).get(0);
+
+        r = RestaurantController.deleteCharacteristicToRestaurant(r, cfull);
+        if (!r.getId().isEmpty()){
+            this.ClearView();
+        }
+    }
+
+    /**
      * Data loaders
      */
     private void loadRestaurants(){
@@ -270,6 +308,16 @@ public class RestaurantControllerUi extends Application {
         this.listCharacName.clear();
         this.hashMapCharac.clear();
         List<CharacteristicModel> characs = CharacteristicController.getAllCharacteristics();
+        for(CharacteristicModel c : characs){
+            this.listCharacName.add(c.getName());
+            this.hashMapCharac.put(c.getName(), c);
+        }
+    }
+
+    private void loadCharacOfRestaurant(){
+        this.listCharacName.clear();
+        this.hashMapCharac.clear();
+        List<CharacteristicModel> characs = this.hashMapRestaurant.get(this.comboRestaurant.getValue()).getCharacteristics();
         for(CharacteristicModel c : characs){
             this.listCharacName.add(c.getName());
             this.hashMapCharac.put(c.getName(), c);
