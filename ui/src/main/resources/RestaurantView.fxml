@@ -81,7 +81,8 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="87.0" layoutY="14.0" style="&#10;" text="Menu" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <Button layoutX="-2.0" layoutY="51.0" mnemonicParsing="false" onAction="#goToPlugin" prefHeight="27.0" prefWidth="222.0" text="Plugin" />
+            <Button layoutY="105.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="222.0"  onAction="#goToPlugin" text="Plugin" />
+            <Button layoutY="50.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="222.0" onAction="#goToTickets" text="Tickets" />
           </children>
         </AnchorPane>
       </items>
