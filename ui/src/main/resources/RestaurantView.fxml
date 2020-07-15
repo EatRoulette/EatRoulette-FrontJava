@@ -12,11 +12,11 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.restaurant.RestaurantControllerUi">
   <children>
-    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="663.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" layoutX="68.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Restaurant" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="68.0" layoutY="4.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Restaurant" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
@@ -24,10 +24,10 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button layoutX="43.0" layoutY="94.0" mnemonicParsing="false" onAction="#RenderFormCreateRestaurant" text="Create new Restaurant" />
-                  <Button layoutX="43.0" layoutY="54.0" mnemonicParsing="false" onAction="#RenderAllRestaurant" prefHeight="26.0" prefWidth="136.0" text="View all Restaurant" />
-                  <Button layoutX="43.0" layoutY="136.0" mnemonicParsing="false" onAction="#RenderFromAddTypeRestaurant" text="Add type to restaurant" />
-                  <Label alignment="CENTER" layoutX="80.0" layoutY="347.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
+                  <Button layoutX="43.0" layoutY="70.0" mnemonicParsing="false" onAction="#RenderFormCreateRestaurant" text="Create new Restaurant" />
+                  <Button layoutX="43.0" layoutY="36.0" mnemonicParsing="false" onAction="#RenderAllRestaurant" prefHeight="26.0" prefWidth="136.0" text="View all Restaurant" />
+                  <Button layoutX="43.0" layoutY="104.0" mnemonicParsing="false" onAction="#renderFormAddTypeRestaurant" text="Add type to restaurant" />
+                  <Label alignment="CENTER" layoutX="80.0" layoutY="398.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Types" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x11" />
                      </font>
@@ -35,8 +35,8 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
-                  <Button layoutX="57.0" layoutY="388.0" mnemonicParsing="false" onAction="#loadTypeForm" text="Create new Type" />
-                  <Label alignment="CENTER" layoutX="54.0" layoutY="469.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Characteristics" textAlignment="CENTER" wrapText="false">
+                  <Button layoutX="57.0" layoutY="437.0" mnemonicParsing="false" onAction="#loadTypeForm" text="Create new Type" />
+                  <Label alignment="CENTER" layoutX="54.0" layoutY="500.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Characteristics" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x111" />
                      </font>
@@ -44,16 +44,31 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x211" />
                      </textFill>
                   </Label>
-                  <Button layoutX="34.0" layoutY="508.0" mnemonicParsing="false" onAction="#loadCharacForm" text="Create new Characteristic" />
-                  <Button layoutX="19.0" layoutY="218.0" mnemonicParsing="false" onAction="#renderFormAddCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Add characteristic to restaurant" />
-                  <Button layoutX="36.0" layoutY="177.0" mnemonicParsing="false" onAction="#renderFormDelTypeRestaurant" text="Delete type to restaurant" />
-                  <Button layoutX="20.0" layoutY="258.0" mnemonicParsing="false" onAction="#renderFormDelCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Del characteristic to restaurant" />
-                  <Separator layoutX="32.0" layoutY="34.0" prefHeight="13.0" prefWidth="158.0" />
-                  <Separator layoutX="32.0" layoutY="372.0" prefHeight="13.0" prefWidth="158.0" />
-                  <Separator layoutX="32.0" layoutY="491.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Button layoutX="34.0" layoutY="535.0" mnemonicParsing="false" onAction="#loadCharacForm" text="Create new Characteristic" />
+                  <Button layoutX="19.0" layoutY="172.0" mnemonicParsing="false" onAction="#renderFormAddCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Add characteristic to restaurant" />
+                  <Button layoutX="43.0" layoutY="138.0" mnemonicParsing="false" onAction="#renderFormDelTypeRestaurant" prefHeight="26.0" prefWidth="136.0" text="Del type to restaurant" />
+                  <Button layoutX="20.0" layoutY="206.0" mnemonicParsing="false" onAction="#renderFormDelCharacRestaurant" prefHeight="26.0" prefWidth="182.0" text="Del characteristic to restaurant" />
+                  <Separator layoutX="32.0" layoutY="21.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Separator layoutX="32.0" layoutY="423.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Separator layoutX="32.0" layoutY="522.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Button layoutX="46.0" layoutY="568.0" mnemonicParsing="false" onAction="#loadUpdateCharacForm" text="Update Characteristic" />
+                  <Button layoutX="69.0" layoutY="470.0" mnemonicParsing="false" onAction="#loadUpdateTypeForm" text="Update Type" />
+                  <Button layoutX="20.0" layoutY="240.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Add Allergen to restaurant" />
+                  <Button layoutX="20.0" layoutY="274.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Del Allergen to restaurant" />
+                  <Label alignment="CENTER" layoutX="72.0" layoutY="301.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Allergens" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x112" />
+                     </font>
+                     <textFill>
+                        <Color blue="0.624" green="0.624" red="0.624" fx:id="x212" />
+                     </textFill>
+                  </Label>
+                  <Separator layoutX="32.0" layoutY="326.0" prefHeight="13.0" prefWidth="158.0" />
+                  <Button layoutX="45.0" layoutY="340.0" mnemonicParsing="false" onAction="#loadAllergenForm" text="Create new Allergen" />
+                  <Button layoutX="55.0" layoutY="372.0" mnemonicParsing="false" onAction="#loadUpdateAllergenForm" text="Update Allergen" />
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+        <ScrollPane prefHeight="620.0" prefWidth="443.0">
           <content>
             <AnchorPane id="Content" fx:id="RestaurantBox" minHeight="-1.0" minWidth="-1.0" prefHeight="550.0" prefWidth="442.0" />
           </content>

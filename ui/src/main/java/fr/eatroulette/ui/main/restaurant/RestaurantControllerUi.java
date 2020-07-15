@@ -1,8 +1,10 @@
 package fr.eatroulette.ui.main.restaurant;
 
+import fr.eatroulette.core.controllers.AllergenController;
 import fr.eatroulette.core.controllers.CharacteristicController;
 import fr.eatroulette.core.controllers.RestaurantController;
 import fr.eatroulette.core.controllers.TypeController;
+import fr.eatroulette.core.models.AllergenModel;
 import fr.eatroulette.core.models.CharacteristicModel;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
@@ -67,6 +69,8 @@ public class RestaurantControllerUi extends Application {
     public TextField typeNameField;
     @FXML
     public TextField characNameField;
+    @FXML
+    public TextField allergenNameField;
 
     private HashMap<String, RestaurantModel> hashMapRestaurant = new HashMap<String, RestaurantModel>();
     private HashMap<String, TypeModel> hashMapType = new HashMap<String, TypeModel>();
@@ -162,7 +166,7 @@ public class RestaurantControllerUi extends Application {
     /**
      * Add type to restaurant view
      */
-    public void RenderFromAddTypeRestaurant() throws IOException {
+    public void renderFormAddTypeRestaurant() throws IOException {
         setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddTypeView.fxml")));
     }
 
@@ -187,6 +191,30 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
+     * Load add allergen view
+     */
+    public void loadAllergenForm() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/AddAllergenView.fxml")));
+    }
+
+    public void saveAllergen(){
+        String allergenName = this.allergenNameField.getText();
+        if(!allergenName.isEmpty() || !allergenName.isBlank()) {
+            AllergenModel allergen = new AllergenModel(allergenName);
+            if (!AllergenController.addAllergen(allergen).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
+    }
+
+    /**
+     * Load update
+     */
+    public void loadUpdateAllergenForm(){
+
+    }
+
+    /**
      *  Add type view
      */
     public void loadTypeForm()throws IOException {
@@ -204,6 +232,13 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
+     * Load update type view
+     */
+    public void loadUpdateTypeForm(){
+
+    }
+
+    /**
      * Add characteristic view
      */
     public void loadCharacForm() throws IOException {
@@ -218,6 +253,13 @@ public class RestaurantControllerUi extends Application {
                 this.ClearView();
             }
         }
+    }
+
+    /**
+     * loadUpdateCharacForm
+     */
+    public void loadUpdateCharacForm(){
+
     }
 
     /**
@@ -347,7 +389,6 @@ public class RestaurantControllerUi extends Application {
         this.hashMapType.clear();
         List<TypeModel> types = this.hashMapRestaurant.get(this.comboRestaurant.getValue()).getTypes();
         for(TypeModel t : types){
-            System.out.println(t.getName());
             this.listTypeName.add(t.getName());
             this.hashMapType.put(t.getName(), t);
         }
