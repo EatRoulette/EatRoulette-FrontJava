@@ -288,10 +288,26 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
-     * loadUpdateCharacForm
+     * load Update Characteristic view
      */
-    public void loadUpdateCharacForm(){
+    public void loadUpdateCharacForm() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateCharacteristicView.fxml")));
+    }
 
+    public void loadCharacCombobox(){
+        this.loadCharcteristics();
+        comboCharac.setItems(FXCollections.observableArrayList(this.listCharacName));
+    }
+
+    public void updateCharac(){
+        CharacteristicModel old = this.hashMapCharac.get(this.comboCharac.getValue());
+        String newName = this.characNameField.getText();
+        if (!newName.isEmpty() || !newName.isBlank()){
+            CharacteristicModel c = new CharacteristicModel(old.getId(), newName);
+            if (!CharacteristicController.updateCharacteristic(c).getId().isEmpty()){
+                this.ClearView();
+            }
+        }
     }
 
     /**
