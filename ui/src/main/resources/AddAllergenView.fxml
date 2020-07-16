@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="FormViewCreateRestaurant" maxHeight="-1.0" maxWidth="-1.0" prefHeight="218.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.restaurant.RestaurantControllerUi">
+   <children>
+      <Text layoutX="45.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergen name" />
+      <TextField fx:id="allergenNameField" layoutX="133.0" layoutY="73.0" />
+      <Button layoutX="133.0" layoutY="124.0" mnemonicParsing="false" onAction="#saveAllergen" text="Submit" />
+      <Button layoutX="230.0" layoutY="124.0" mnemonicParsing="false" onAction="#ClearView" text="Cancel" />
+      <Text layoutX="144.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create allergen" wrappingWidth="117.59997253417964">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
