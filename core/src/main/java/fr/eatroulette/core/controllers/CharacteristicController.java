@@ -155,7 +155,6 @@ public class CharacteristicController {
             String output = br.readLine();
 
             JSONArray jsonArray = new JSONArray(output);
-            System.out.println(jsonArray);
             for (int i = 0; i <jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
