@@ -3,13 +3,19 @@ package fr.eatroulette.ui.main.restaurant;
 import fr.eatroulette.core.controllers.AllergenController;
 import fr.eatroulette.core.controllers.CharacteristicController;
 import fr.eatroulette.core.controllers.RestaurantController;
+import fr.eatroulette.core.controllers.TicketController;
 import fr.eatroulette.core.controllers.TypeController;
+
 import fr.eatroulette.core.models.AllergenModel;
 import fr.eatroulette.core.models.CharacteristicModel;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
+
+import fr.eatroulette.ui.main.tickets.TicketsController;
+import javafx.scene.control.TextField;
+
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
 import javafx.application.Application;
@@ -516,6 +522,9 @@ public class RestaurantControllerUi extends Application {
      */
     public void goToPlugin(){
         this.router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
+    }
+    public void goToTickets(){
+        this.router.<TicketsController>goTo("Tickets", controller -> controller.setRouter(router));
     }
 
     private void setDataPane(Node node){

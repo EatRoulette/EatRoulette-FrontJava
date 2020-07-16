@@ -29,4 +29,76 @@ public class TicketModel {
         this.comments = comments;
         this.createdAt = createdAt;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public UserModel getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserModel author) {
+        this.author = author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getEmergency() {
+        return emergency;
+    }
+
+    public void setEmergency(Integer emergency) {
+        this.emergency = emergency;
+    }
+
+    public List<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
