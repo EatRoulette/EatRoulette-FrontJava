@@ -192,6 +192,31 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
+     * Load del allergen of restaurant
+     */
+    public void renderFormDelAllergenOfRestaurant() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/DelAllergenOfRestaurantView.fxml")));
+    }
+
+    public void loadAllergensOfRestaurants(){
+        this.loadAllergensOfRestaurant();
+        comboAllergen.setItems(FXCollections.observableArrayList(this.listAllergenName));
+    }
+
+    public void delAllergenOfRestaurant(){
+        RestaurantModel r = this.hashMapRestaurant.get(this.comboRestaurant.getValue());
+        AllergenModel a = this.hashMapAllergen.get(this.comboAllergen.getValue());
+        AllergenModel afull = AllergenController.getAllAllergens().stream()
+                .filter(allergenModel -> allergenModel.getName().equals(a.getName()))
+                .collect(Collectors.toList()).get(0);
+
+        r = RestaurantController.deleteAllergenToRestaurant(r, afull);
+        if (!r.getId().isEmpty()){
+            this.ClearView();
+        }
+    }
+
+    /**
      * Add type to restaurant view
      */
     public void renderFormAddTypeRestaurant() throws IOException {
@@ -462,6 +487,16 @@ public class RestaurantControllerUi extends Application {
         for(TypeModel t : types){
             this.listTypeName.add(t.getName());
             this.hashMapType.put(t.getName(), t);
+        }
+    }
+
+    private void loadAllergensOfRestaurant(){
+        this.listAllergenName.clear();
+        this.hashMapAllergen.clear();
+        List<AllergenModel> allergens = this.hashMapRestaurant.get(this.comboRestaurant.getValue()).getAllergens();
+        for (AllergenModel a : allergens){
+            this.listAllergenName.add(a.getName());
+            this.hashMapAllergen.put(a.getName(), a);
         }
     }
 
