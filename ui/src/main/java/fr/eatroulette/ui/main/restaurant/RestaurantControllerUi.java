@@ -169,6 +169,29 @@ public class RestaurantControllerUi extends Application {
     }
 
     /**
+     * Add Allergen to restaurant view
+     */
+    public void renderFormAddAllergenToRestaurant() throws IOException {
+        setDataPane(FXMLLoader.load(getClass().getResource("/AddAllergenToRestaurantView.fxml")));
+    }
+
+    public void loadRestaurantAllergenBoxes(){
+        this.loadRestaurants();
+        this.loadAllergens();
+        comboRestaurant.setItems(FXCollections.observableArrayList(this.listRestaurantName));
+        comboAllergen.setItems(FXCollections.observableArrayList(this.listAllergenName));
+    }
+
+    public void sendAllergenToRestaurant(){
+        RestaurantModel r = this.hashMapRestaurant.get(this.comboRestaurant.getValue());
+        AllergenModel a = this.hashMapAllergen.get(this.comboAllergen.getValue());
+        r = RestaurantController.addAllergenToRestaurant(r, a);
+        if (!r.getName().isEmpty()){
+            this.ClearView();
+        }
+    }
+
+    /**
      * Add type to restaurant view
      */
     public void renderFormAddTypeRestaurant() throws IOException {
