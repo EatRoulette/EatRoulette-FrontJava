@@ -15,7 +15,7 @@ To create a plugin you will need :
 
 ### Add the interface *EatRoulettePlugin*
 
-You wiil need to create a Java class named EatRoulettePlugin.java with the following content :
+You will need to create a Java class named EatRoulettePlugin.java with the following content :
 
 ```java
 public interface EatRoulettePlugin {
