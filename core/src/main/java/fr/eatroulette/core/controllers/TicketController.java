@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -107,6 +108,37 @@ public class TicketController {
         return false;
     }
 
+    public static boolean addCommentToTicket(TicketModel t, CommentModel c){
+        if (c.getMessage().isBlank() || c.getMessage().isEmpty()){
+            return false;
+        }
+
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/ticket/support/comment/"+ControllerConstant.ADM_TOKEN);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.POST);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            String input = String.format("{\"idTicket\": \"%s\", \"message\": \"%s\" }", t.getId(), c.getMessage());
+
+            OutputStream os = conn.getOutputStream();
+            os.write(input.getBytes());
+            os.flush();
+            int response = conn.getResponseCode();
+            if (response != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+            conn.disconnect();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     /**
      * Ticket controller utils
      */
@@ -137,5 +169,4 @@ public class TicketController {
                 return "";
         }
     }
-
 }

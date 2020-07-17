@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -119,6 +117,20 @@ public class TicketsControllerUI implements Initializable {
                 displayDetails(box, ticketToDisplay);
             }
         });
+        HBox addCommHbox = new HBox(10);
+        TextField commentField = new TextField();
+        Button addCommBtn = new Button("Commenter");
+        addCommBtn.setOnAction(click -> {
+            CommentModel c = new CommentModel(commentField.getText());
+            if(TicketController.addCommentToTicket(ticketToDisplay, c)){
+                Collections.reverse(ticketToDisplay.getComments());
+                ticketToDisplay.addComment(c);
+                box.getChildren().clear();
+                Collections.reverse(ticketToDisplay.getComments());
+                displayDetails(box, ticketToDisplay);
+            }
+        });
+
         // TODO Label author = new Label(ticketToDisplay.getAuthor());
 
         box.getChildren().add(title);
@@ -129,11 +141,23 @@ public class TicketsControllerUI implements Initializable {
         box.getChildren().add(hBoxStatus);
         box.getChildren().add(type);
         box.getChildren().add(createdAt);
-        box.getChildren().add( new Label("Commentaires : "));
+        box.getChildren().add( new Label("Section commentaires : "));
+        box.getChildren().add( new Separator());
+        addCommHbox.getChildren().add( new Label("Nouveau commentaire :"));
+        addCommHbox.getChildren().add(commentField);
+        addCommHbox.getChildren().add(addCommBtn);
+        box.getChildren().add(addCommHbox);
+        box.getChildren().add( new Label("Commentaires :"));
 
-        if(ticketToDisplay.getComments() != null){
-            for(int i = 0; i < ticketToDisplay.getComments().size(); i++){
-                CommentModel comment = ticketToDisplay.getComments().get(i);
+        List<CommentModel> comments = ticketToDisplay.getComments();
+        //To get the latest first
+        if (!ticketToDisplay.isSortedComment()){
+            Collections.reverse(comments);
+            ticketToDisplay.setSortedComment(true);
+        }
+        if(comments != null){
+            for(int i = 0; i < comments.size(); i++){
+                CommentModel comment = comments.get(i);
                 Label commentLabel = new Label(comment.getMessage());
                 box.getChildren().add(commentLabel);
             }
