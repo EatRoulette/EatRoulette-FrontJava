@@ -24,6 +24,16 @@ public class RestaurantModel {
         this.dep = "";
     }
 
+    public RestaurantModel(String id){
+        this.id = id;
+        this.name = "";
+        this.site = "";
+        this.address = "";
+        this.city = "";
+        this.postalCode = "";
+        this.dep = "";
+    }
+
     public RestaurantModel(String name, String site, String address, String city, String postalCode, String dep) {
         this.name = name;
         this.site = site;
