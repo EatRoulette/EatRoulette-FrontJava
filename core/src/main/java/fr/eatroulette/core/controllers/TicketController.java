@@ -60,15 +60,15 @@ public class TicketController {
                 }
 
                 TicketModel ticket = new TicketModel(
-                        jsonObject.get("id").toString(),
+                        checkAndReturnValue(jsonObject,"id"),
                         author,
-                        jsonObject.get("title").toString(),
-                        jsonObject.get("message").toString(),
-                        jsonObject.get("status").toString(),
-                        jsonObject.get("type").toString(),
+                        checkAndReturnValue(jsonObject,"title"),
+                        checkAndReturnValue(jsonObject,"message"),
+                        checkAndReturnValue(jsonObject,"status"),
+                        checkAndReturnValue(jsonObject,"type"),
                         0,
                         comments,
-                        manageDate(jsonObject.get("created_at").toString())
+                        jsonObject.has("created_at") ? manageDate(jsonObject.get("created_at").toString()) : null
                  );
                 tickets.add(ticket);
             }
@@ -145,10 +145,8 @@ public class TicketController {
 
     private static UserModel manageUser(JSONObject jsonAuthor){
         return new UserModel(
-                "",
-                jsonAuthor.get("_id").toString(),
-                jsonAuthor.get("firstname").toString(),
-                jsonAuthor.get("lastname").toString()
+                jsonAuthor.get("firstName").toString(),
+                jsonAuthor.get("lastName").toString()
         );
     }
 
@@ -168,5 +166,9 @@ public class TicketController {
             default:
                 return "";
         }
+    }
+
+    public static String checkAndReturnValue(JSONObject obj, String key){
+        return obj.has(key)? obj.getString(key) : null;
     }
 }

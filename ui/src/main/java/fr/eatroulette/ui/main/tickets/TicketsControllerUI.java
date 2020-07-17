@@ -103,6 +103,7 @@ public class TicketsControllerUI implements Initializable {
 
     private void displayDetails (VBox box, TicketModel ticketToDisplay){
         Label title = new Label("Titre : " + ticketToDisplay.getTitle());
+        Label author = new Label("Auteur : " + ticketToDisplay.getAuthorName());
         Label message = new Label("Message : " + ticketToDisplay.getMessage());
         HBox hBoxStatus = new HBox(10);
         Label status = new Label("Status : " + ticketToDisplay.getStatus());
@@ -131,9 +132,8 @@ public class TicketsControllerUI implements Initializable {
             }
         });
 
-        // TODO Label author = new Label(ticketToDisplay.getAuthor());
-
         box.getChildren().add(title);
+        box.getChildren().add(author);
         box.getChildren().add(message);
         hBoxStatus.getChildren().add(status);
         hBoxStatus.getChildren().add(comboBoxStatus);

@@ -20,6 +20,11 @@ public class UserModel {
         this.lastname = lastname;
     }
 
+    public UserModel(String firstname, String lastname){
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     public UserModel(String token, String id, String firstname, String lastname) {
         this.token = token;
         this.id = id;

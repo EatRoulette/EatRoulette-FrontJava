@@ -48,6 +48,14 @@ public class TicketModel {
         return title;
     }
 
+    public String getAuthorName() {
+        String name = "";
+        if(this.author != null){
+            name = this.author.getFirstname() + " " + this.author.getLastname();
+        }
+        return name;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
