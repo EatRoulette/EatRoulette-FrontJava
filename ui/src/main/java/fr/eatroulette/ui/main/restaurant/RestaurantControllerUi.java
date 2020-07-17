@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -35,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RestaurantControllerUi extends Application {
+public class RestaurantControllerUi {
 
     @FXML
     public TextField nameFormField;
@@ -88,11 +87,6 @@ public class RestaurantControllerUi extends Application {
     private List<String> listTypeName = new ArrayList<String>();
     private List<String> listCharacName = new ArrayList<String>();
     private List<String> listAllergenName = new ArrayList<String>();
-
-    @Override
-    public void start(Stage stage) throws Exception {
-
-    }
 
     /**
      * Restaurant view create form
