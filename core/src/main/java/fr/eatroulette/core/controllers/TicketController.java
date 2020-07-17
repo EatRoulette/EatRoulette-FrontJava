@@ -2,23 +2,19 @@ package fr.eatroulette.core.controllers;
 
 import fr.eatroulette.core.models.CommentModel;
 import fr.eatroulette.core.models.TicketModel;
-import fr.eatroulette.core.models.TypeModel;
 import fr.eatroulette.core.models.UserModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.xml.stream.events.Comment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +30,7 @@ public class TicketController {
         List<TicketModel> tickets = new ArrayList<>();
 
         try {
-            URL url = new URL("http://localhost:3000/tickets");
+            URL url = new URL(ControllerConstant.API_URL+"/tickets");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
@@ -82,6 +78,39 @@ public class TicketController {
         return tickets;
     }
 
+    /**
+     * Update the ticket Status
+     * @param ticket
+     * @return True | False
+     */
+    public static boolean updateTicketStatus(TicketModel ticket){
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/ticket/desk/"+ticket.getId()+"/"+statusMatcher(ticket.getStatus()));
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.PUT);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            int response = conn.getResponseCode();
+            if (response != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            conn.disconnect();
+
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Ticket controller utils
+     */
+
     private static UserModel manageUser(JSONObject jsonAuthor){
         return new UserModel(
                 "",
@@ -90,9 +119,23 @@ public class TicketController {
                 jsonAuthor.get("lastname").toString()
         );
     }
+
     private static LocalDate manageDate(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         return LocalDate.parse(date, formatter);
+    }
+
+    private static String statusMatcher(String input){
+        switch (input){
+            case "Traité":
+                return "done";
+            case "En cours de traitement":
+                return "pending";
+            case "En attente":
+                return "standby";
+            default:
+                return "";
+        }
     }
 
 }

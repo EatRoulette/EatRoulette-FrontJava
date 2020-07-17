@@ -41,42 +41,43 @@ public class TicketsControllerUI implements Initializable {
         this.status.add("En cours de traitement");
         this.status.add("En attente");
         this.status.add("Traité");
-        System.out.println(tickets.size());
         this.displayTickets();
     }
 
     public void displayOnlyBugTickets(){
         VBox ticketsRoot = new VBox();
-        // ClearView
-        TicketsBox.getChildren().clear();
+        this.ClearView();
 
-        List<TicketModel> filteredList = tickets.stream().filter(t -> t.getType().equals("Bogue") ).collect(Collectors.toList());
+        List<TicketModel> filteredList = tickets.stream()
+                .filter(t -> t.getType().equals("Bogue") )
+                .collect(Collectors.toList());
         display(ticketsRoot, filteredList);
 
     }
 
     public void displayOnlyDemandsTickets(){
         VBox ticketsRoot = new VBox();
-        // ClearView
-        TicketsBox.getChildren().clear();
+        this.ClearView();
 
-        List<TicketModel> filteredList = tickets.stream().filter(t -> t.getType().equals("Demande") ).collect(Collectors.toList());
+        List<TicketModel> filteredList = tickets.stream()
+                .filter(t -> t.getType().equals("Demande") )
+                .collect(Collectors.toList());
         display(ticketsRoot, filteredList);
     }
 
     public void displayOnlyNewRestaurantRequest(){
         VBox ticketsRoot = new VBox();
-        // ClearView
-        TicketsBox.getChildren().clear();
+        this.ClearView();
 
-        List<TicketModel> filteredList = tickets.stream().filter(t -> t.getType().equals("Nouveau restaurant") ).collect(Collectors.toList());
+        List<TicketModel> filteredList = tickets.stream()
+                .filter(t -> t.getType().equals("Nouveau restaurant") )
+                .collect(Collectors.toList());
         display(ticketsRoot, filteredList);
     }
 
     public void displayTickets(){
         VBox ticketsRoot = new VBox();
-        // ClearView
-        TicketsBox.getChildren().clear();
+        this.ClearView();
 
         display(ticketsRoot, tickets);
     }
@@ -103,7 +104,6 @@ public class TicketsControllerUI implements Initializable {
     }
 
     private void displayDetails (VBox box, TicketModel ticketToDisplay){
-
         Label title = new Label("Titre : " + ticketToDisplay.getTitle());
         Label message = new Label("Message : " + ticketToDisplay.getMessage());
         HBox hBoxStatus = new HBox(10);
@@ -111,12 +111,21 @@ public class TicketsControllerUI implements Initializable {
         ComboBox<String> comboBoxStatus = new ComboBox<>(FXCollections.observableArrayList(this.status));
         Label type = new Label("Type : " + ticketToDisplay.getType());
         Label createdAt = new Label("Créé le : " + ticketToDisplay.getCreatedAt().toString());
+        Button updateStatusBtn = new Button("Update");
+        updateStatusBtn.setOnAction(click -> {
+            ticketToDisplay.setStatus(comboBoxStatus.getValue());
+            if (TicketController.updateTicketStatus(ticketToDisplay)){
+                box.getChildren().clear();
+                displayDetails(box, ticketToDisplay);
+            }
+        });
         // TODO Label author = new Label(ticketToDisplay.getAuthor());
 
         box.getChildren().add(title);
         box.getChildren().add(message);
         hBoxStatus.getChildren().add(status);
         hBoxStatus.getChildren().add(comboBoxStatus);
+        hBoxStatus.getChildren().add(updateStatusBtn);
         box.getChildren().add(hBoxStatus);
         box.getChildren().add(type);
         box.getChildren().add(createdAt);
