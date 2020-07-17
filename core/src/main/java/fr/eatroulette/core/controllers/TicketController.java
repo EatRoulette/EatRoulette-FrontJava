@@ -146,7 +146,7 @@ public class TicketController {
     private static UserModel manageUser(JSONObject jsonAuthor){
         return new UserModel(
                 "",
-                jsonAuthor.get("_id").toString(),
+                jsonAuthor.get("id").toString(),
                 jsonAuthor.get("firstname").toString(),
                 jsonAuthor.get("lastname").toString()
         );

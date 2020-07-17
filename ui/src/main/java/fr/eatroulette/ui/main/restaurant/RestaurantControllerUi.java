@@ -97,7 +97,10 @@ public class RestaurantControllerUi {
 
     public void SendFormCreateRestaurant(){
         RestaurantModel restaurant = this.collectFormRestaurantCreator();
-        RestaurantController.addRestaurant(restaurant);
+        restaurant = RestaurantController.addRestaurant(restaurant);
+        if (!restaurant.getId().isEmpty()){
+            this.ClearView();
+        }
     }
 
     public RestaurantModel collectFormRestaurantCreator(){

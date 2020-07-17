@@ -56,7 +56,7 @@ public class RestaurantController {
             JSONObject jsonObject = new JSONObject(output);
             restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                     (String) jsonObject.get("name"),
-                    (String) jsonObject.get("site"),
+                    (String) jsonObject.get("website"),
                     (String) jsonObject.get("address"),
                     (String) jsonObject.get("city"),
                     (String) jsonObject.get("postalCode"),
@@ -105,7 +105,7 @@ public class RestaurantController {
             JSONObject jsonObject = new JSONObject(output);
             restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                                             (String) jsonObject.get("name"),
-                                            (String) jsonObject.get("site"),
+                                            (String) jsonObject.get("website"),
                                             (String) jsonObject.get("address"),
                                             (String) jsonObject.get("city"),
                                             (String) jsonObject.get("postalCode"),
@@ -207,7 +207,7 @@ public class RestaurantController {
 
                 RestaurantModel restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                                                                  (String) jsonObject.get("name"),
-                                                                 (String) jsonObject.get("site"),
+                                                                 (String) jsonObject.get("website"),
                                                                  (String) jsonObject.get("address"),
                                                                  (String) jsonObject.get("city"),
                                                                  (String) jsonObject.get("postalCode"),
