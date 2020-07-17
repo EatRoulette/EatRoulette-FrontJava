@@ -306,6 +306,11 @@ public class RestaurantControllerUi {
         setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/UpdateTypeView.fxml")));
     }
 
+    public void loadTypeCombo(){
+        this.loadTypes();
+        comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
+    }
+
     public void updateType() {
         TypeModel old = this.hashMapType.get(this.comboType.getValue());
         String newName = this.typeNameField.getText();

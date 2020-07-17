@@ -18,7 +18,7 @@
          </font>
       </Text>
       <ComboBox fx:id="comboType" layoutX="137.0" layoutY="107.0" prefWidth="150.0" />
-      <Button layoutX="137.0" layoutY="61.0" mnemonicParsing="false" onAction="#loadTypeCombobox" prefHeight="26.0" prefWidth="150.0" text="Load | refresh" />
+      <Button layoutX="137.0" layoutY="61.0" mnemonicParsing="false" onAction="#loadTypeCombo" prefHeight="26.0" prefWidth="150.0" text="Load | refresh" />
       <Text layoutX="50.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type name" />
       <TextField fx:id="typeNameField" layoutX="136.0" layoutY="152.0" />
    </children>
