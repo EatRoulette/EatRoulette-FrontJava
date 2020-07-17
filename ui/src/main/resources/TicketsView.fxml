@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="fr.eatroulette.ui.main.tickets.TicketsController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.eatroulette.ui.main.tickets.TicketsControllerUI">
   <children>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
@@ -28,7 +28,8 @@
             </Label>
             <Button layoutX="43.0" layoutY="55.0" mnemonicParsing="false" onAction="#displayOnlyBugTickets" text="Display only bug tickets" />
             <Button layoutX="43.0" layoutY="93.0" mnemonicParsing="false" onAction="#displayOnlyDemandsTickets" text="Display only demands tickets" />
-            <Button layoutX="43.0" layoutY="131.0" mnemonicParsing="false" onAction="#displayTickets" text="Display all" />
+            <Button layoutX="43.0" layoutY="166.0" mnemonicParsing="false" onAction="#displayTickets" text="Display all" />
+                  <Button layoutX="43.0" layoutY="130.0" mnemonicParsing="false" onAction="#displayOnlyNewRestaurantRequest" text="Display only demands tickets" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -43,8 +44,8 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="87.0" layoutY="14.0" style="&#10;" text="Menu" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <Button layoutY="105.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="222.0" text="Plugin" onAction="#goToPlugin" />
-                  <Button layoutY="50.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="222.0" text="Restaurant"  onAction="#goToRestaurant"/>
+                  <Button layoutY="105.0" mnemonicParsing="false" onAction="#goToPlugin" prefHeight="39.0" prefWidth="222.0" text="Plugin" />
+                  <Button layoutY="50.0" mnemonicParsing="false" onAction="#goToRestaurant" prefHeight="39.0" prefWidth="222.0" text="Restaurant" />
           </children>
         </AnchorPane>
       </items>

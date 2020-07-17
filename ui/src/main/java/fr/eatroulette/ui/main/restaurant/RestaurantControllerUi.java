@@ -12,7 +12,7 @@ import fr.eatroulette.core.models.TypeModel;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 
-import fr.eatroulette.ui.main.tickets.TicketsController;
+import fr.eatroulette.ui.main.tickets.TicketsControllerUI;
 import javafx.scene.control.TextField;
 
 import fr.eatroulette.ui.main.Router;
@@ -523,7 +523,7 @@ public class RestaurantControllerUi extends Application {
         this.router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
     }
     public void goToTickets(){
-        this.router.<TicketsController>goTo("Tickets", controller -> controller.setRouter(router));
+        this.router.<TicketsControllerUI>goTo("Tickets", controller -> controller.setRouter(router));
     }
 
     private void setDataPane(Node node){
