@@ -87,7 +87,11 @@ public class CliInterpreter {
         }
     }
 
-    private void addRestaurantInterpreter(){}
+    private void addRestaurantInterpreter(){
+        if (this.args.size() == 6){
+            System.out.println(this.args);
+        }
+    }
 
     private void delInterpreter(){
         switch (args.get(0)){
@@ -125,13 +129,66 @@ public class CliInterpreter {
                     System.out.println("Characteristic deleted");
                 }else {
                     System.out.println("Failed to deleted");
-                }break;
+                }
+                break;
             default:
                 this.invalidCommand();
         }
     }
 
-    private void updInterpreter(){}
+    private void updInterpreter(){
+        String id;
+        String name;
+        switch (args.get(0)){
+            case "type":
+                this.args.remove(0);
+                if (!(this.args.size() == 2)) {
+                    System.out.println("Not enought arguments");
+                    return;
+                }
+                id = this.args.remove(0);
+                name = this.args.remove(0);
+                TypeModel type = new TypeModel(id, name);
+                if(TypeController.updateType(type).getName().equals(name)){
+                    System.out.println("Type updated");
+                }else {
+                    System.out.println("Failed to update");
+                }
+                break;
+            case "allergen":
+                this.args.remove(0);
+                if (!(this.args.size() == 2)) {
+                    System.out.println("Not enought arguments");
+                    return;
+                }
+                id = this.args.remove(0);
+                name = this.args.remove(0);
+                AllergenModel allergen = new AllergenModel(id, name);
+                if(AllergenController.updateAllergen(allergen).getName().equals(name)){
+                    System.out.println("Allergen updated");
+                }else {
+                    System.out.println("Failed to update");
+                }
+                break;
+            case "characteristic":
+                this.args.remove(0);
+                if (!(this.args.size() == 2)) {
+                    System.out.println("Not enought arguments");
+                    return;
+                }
+                id = this.args.remove(0);
+                name = this.args.remove(0);
+                CharacteristicModel charac = new CharacteristicModel(id, name);
+                if(CharacteristicController.updateCharacteristic(charac).getName().equals(name)){
+                    System.out.println("Characteristic updated");
+                }else {
+                    System.out.println("Failed to update");
+                }
+                break;
+            default:
+                this.invalidCommand();
+        }
+    }
 
     private void showInterpreter(){
         switch (args.get(0)){
