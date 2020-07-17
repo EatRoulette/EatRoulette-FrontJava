@@ -8,14 +8,20 @@ import fr.eatroulette.core.models.AllergenModel;
 import fr.eatroulette.core.models.CharacteristicModel;
 import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
+import fr.eatroulette.core.plugin.PluginManager;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CliInterpreter {
     private ArrayList<String> args;
+    private PluginManager pluginManager;
 
-    public CliInterpreter(){}
+    public CliInterpreter(){
+        this.pluginManager = new PluginManager();
+    }
 
     public void setArgs(ArrayList<String> args) {
         this.args = args;
@@ -157,17 +163,34 @@ public class CliInterpreter {
                     System.out.println(String.format("id: %s name: %s", c.getId(), c.getName()));
                 }
                 break;
+            case "plugins":
+                for (String p : this.pluginManager.getPluginsName()){
+                    System.out.println(String.format("plugin-name: %s", p));
+                }
+                break;
             default:
                 this.invalidCommand();
         }
     }
 
-    private void runInterpreter() {}
+    private void runInterpreter() {
+        if (this.args.size() > 0){
+            try {
+                this.pluginManager.runPlugin(this.args.remove(0));
+            } catch (IOException | InstantiationException |
+                     InvocationTargetException | IllegalAccessException |
+                     NoSuchMethodException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void showHelp() {
-        System.out.println("Commands ...");
+        System.out.println("EatRoulette-cli commands ...");
         System.out.println("\tadd [restaurant | type | allergen | characteristic] \n" +
-                           "\tdell [restaurant | type | allergen | characteristic] id");
+                           "\tdell [restaurant | type | allergen | characteristic] id\n" +
+                           "\trun [plugin-name]\n" +
+                           "\tshow [restaurants | types | allergens | characteristics | plugins]");
     }
 
     private void invalidCommand() {
