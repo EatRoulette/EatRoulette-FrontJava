@@ -128,15 +128,12 @@ public class CliInterpreter {
     private void updInterpreter(){}
 
     private void showInterpreter(){
-
         switch (args.get(0)){
             case "restaurants":
                 this.args.remove(0);
-                RestaurantModel restaurant = new RestaurantModel(this.args.remove(0));
-                if(RestaurantController.deleteRestaurant(restaurant)){
-                    System.out.println("Restaurant deleted");
-                }else {
-                    System.out.println("Failed to deleted");
+                List<RestaurantModel> restaurants = RestaurantController.getAllRestaurants();
+                for (RestaurantModel r : restaurants){
+                    System.out.println(String.format("id: %s name: %s site: %s address: %s town: %s postalCode: %s dep: %s ", r.getId(), r.getName(), r.getSite(), r.getAddress(), r.getCity(), r.getPostalCode(), r.getDep()));
                 }
                 break;
             case "types":
@@ -169,7 +166,8 @@ public class CliInterpreter {
 
     private void showHelp() {
         System.out.println("Commands ...");
-        System.out.println("\tadd [restaurant | type | allergen | characteristic] ");
+        System.out.println("\tadd [restaurant | type | allergen | characteristic] \n" +
+                           "\tdell [restaurant | type | allergen | characteristic] id");
     }
 
     private void invalidCommand() {
