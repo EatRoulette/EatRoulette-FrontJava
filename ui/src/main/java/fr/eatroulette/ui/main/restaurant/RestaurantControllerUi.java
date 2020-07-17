@@ -394,7 +394,7 @@ public class RestaurantControllerUi extends Application {
     }
 
     public void loadTypeCombobox(){
-        this.loadTypes();
+        this.loadTypesOfRestaurant();
         comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 
