@@ -14,7 +14,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.cert.CertSelector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +35,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = restaurantModel.toJSON();
 
@@ -87,6 +87,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.PUT);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = restaurantModel.toJSON();
 
@@ -131,7 +132,6 @@ public class RestaurantController {
      * @return
      */
     public static boolean deleteRestaurant(RestaurantModel restaurantModel){
-//        RestaurantModel restaurant = new RestaurantModel();
         boolean deleted = false;
 
         try {
@@ -140,6 +140,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = restaurantModel.toJSON();
 
@@ -172,6 +173,7 @@ public class RestaurantController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             if (conn.getResponseCode() != 200) {
                 throw new Exception("Failed : HTTP error code : " + conn.getResponseCode());
@@ -251,6 +253,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idType\": \"%s\"}", type.getId());
 
@@ -296,6 +299,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idType\": \"%s\"}", typeModel.getId());
 
@@ -385,6 +389,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idAllergen\": \"%s\"}", allergenModel.getId());
 
@@ -430,6 +435,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idAllergen\": \"%s\"}", allergenModel.getId());
 
@@ -474,6 +480,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idCharac\": \"%s\"}", characteristicModel.getId());
 
@@ -519,6 +526,7 @@ public class RestaurantController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = String.format("{\"idCharac\": \"%s\"}", characteristicModel.getId());
 

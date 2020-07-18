@@ -29,6 +29,7 @@ public class CharacteristicController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = characteristicModel.toJSON();
 
@@ -73,6 +74,7 @@ public class CharacteristicController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.PUT);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = characteristicModel.toJSON();
 
@@ -119,6 +121,7 @@ public class CharacteristicController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = characteristicModel.toJSON();
 
@@ -149,6 +152,7 @@ public class CharacteristicController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             if (conn.getResponseCode() != 200) {
                 throw new Exception("Failed : HTTP error code : "
