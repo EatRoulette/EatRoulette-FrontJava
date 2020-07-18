@@ -205,14 +205,15 @@ public class RestaurantController {
                     characteristicsList.add(c);
                 }
 
-                RestaurantModel restaurant = new RestaurantModel((String) jsonObject.get("_id"),
-                                                                 (String) jsonObject.get("name"),
-                                                                 (String) jsonObject.get("website"),
-                                                                 (String) jsonObject.get("address"),
-                                                                 (String) jsonObject.get("city"),
-                                                                 (String) jsonObject.get("postalCode"),
-                                                                 (String) jsonObject.get("dep"),
-                                                                  typesList, allergensList, characteristicsList);
+
+                RestaurantModel restaurant = new RestaurantModel(checkAndReturnValue(jsonObject,"_id"),
+                                                                checkAndReturnValue(jsonObject,"name"),
+                                                                checkAndReturnValue(jsonObject,"site"),
+                                                                checkAndReturnValue(jsonObject,"address"),
+                                                                checkAndReturnValue(jsonObject,"city"),
+                                                                checkAndReturnValue(jsonObject,"postalCode"),
+                                                                checkAndReturnValue(jsonObject,"dep"),
+                                                                typesList, allergensList, characteristicsList);
                 restaurants.add(restaurant);
             }
             conn.disconnect();
@@ -220,6 +221,10 @@ public class RestaurantController {
             e.printStackTrace();
         }
         return restaurants;
+    }
+
+    public static String checkAndReturnValue(JSONObject obj, String key){
+        return obj.has(key)? obj.getString(key) : null;
     }
 
     /**
