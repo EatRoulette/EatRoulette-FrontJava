@@ -29,6 +29,7 @@ public class AllergenController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = allergenModel.toJSON();
 
@@ -37,7 +38,7 @@ public class AllergenController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -53,6 +54,8 @@ public class AllergenController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return allergen;
@@ -71,6 +74,7 @@ public class AllergenController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.PUT);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = allergenModel.toJSON();
 
@@ -79,7 +83,7 @@ public class AllergenController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -96,6 +100,8 @@ public class AllergenController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return allergen;
@@ -115,6 +121,7 @@ public class AllergenController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = allergenModel.toJSON();
 
@@ -145,9 +152,10 @@ public class AllergenController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -164,6 +172,8 @@ public class AllergenController {
             }
             conn.disconnect();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return allergens;

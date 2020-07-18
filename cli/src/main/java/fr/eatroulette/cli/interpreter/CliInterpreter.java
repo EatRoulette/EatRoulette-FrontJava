@@ -59,6 +59,7 @@ public class CliInterpreter {
     }
 
     private void addInterpreter(){
+        if (!this.enoughArgs(0)) return;
         switch (args.get(0)){
             case "restaurant":
                 this.args.remove(0);
@@ -66,18 +67,21 @@ public class CliInterpreter {
                 break;
             case "type":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 TypeModel type = new TypeModel(this.args.remove(0));
                 type = TypeController.addType(type);
                 System.out.println(String.format("id: %s name: %s", type.getId(), type.getName()));
                 break;
             case "allergen":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 AllergenModel allergen = new AllergenModel(this.args.remove(0));
                 allergen = AllergenController.addAllergen(allergen);
                 System.out.println(String.format("id: %s name: %s", allergen.getId(), allergen.getName()));
                 break;
             case "characteristic":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 CharacteristicModel charac = new CharacteristicModel(this.args.remove(0));
                 charac = CharacteristicController.addCharacteristic(charac);
                 System.out.println(String.format("id: %s name: %s", charac.getId(), charac.getName()));
@@ -97,13 +101,17 @@ public class CliInterpreter {
                                 r.getId(), r.getName(), r.getSite(),
                                 r.getAddress(), r.getCity(), r.getPostalCode(), r.getDep()));
             }
+        } else {
+            this.invalidArgs();
         }
     }
 
     private void delInterpreter(){
+        if (!this.enoughArgs(0)) return;
         switch (args.get(0)){
             case "restaurant":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 RestaurantModel restaurant = new RestaurantModel(this.args.remove(0));
                 if(RestaurantController.deleteRestaurant(restaurant)){
                     System.out.println("Restaurant deleted");
@@ -113,6 +121,7 @@ public class CliInterpreter {
                 break;
             case "type":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 TypeModel type = new TypeModel(this.args.remove(0), "");
                 if(TypeController.deleteType(type)){
                     System.out.println("Type deleted");
@@ -122,6 +131,7 @@ public class CliInterpreter {
                 break;
             case "allergen":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 AllergenModel allergen = new AllergenModel(this.args.remove(0), "");
                 if(AllergenController.deleteAllergen(allergen)){
                     System.out.println("Allergen deleted");
@@ -131,6 +141,7 @@ public class CliInterpreter {
                 break;
             case "characteristic":
                 this.args.remove(0);
+                if (!this.enoughArgs(0)) return;
                 CharacteristicModel charac = new CharacteristicModel(this.args.remove(0), "");
                 if(CharacteristicController.deleteCharacteristic(charac)){
                     System.out.println("Characteristic deleted");
@@ -149,8 +160,8 @@ public class CliInterpreter {
         switch (args.get(0)){
             case "type":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -164,8 +175,8 @@ public class CliInterpreter {
                 break;
             case "allergen":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -179,8 +190,8 @@ public class CliInterpreter {
                 break;
             case "characteristic":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -198,6 +209,7 @@ public class CliInterpreter {
     }
 
     private void showInterpreter(){
+        if (!this.enoughArgs(0)) return;
         switch (args.get(0)){
             case "restaurants":
                 this.args.remove(0);
@@ -238,7 +250,7 @@ public class CliInterpreter {
     }
 
     private void runInterpreter() {
-        if (this.args.size() > 0){
+        if (this.enoughArgs(0)){
             try {
                 this.pluginManager.runPlugin(this.args.remove(0));
             } catch (IOException | InstantiationException |
@@ -261,6 +273,23 @@ public class CliInterpreter {
     }
 
     private void invalidCommand() {
-        System.out.println("Invalid command line");
+        System.out.println("Invalid command line... Enter 'help' to get a reminder");
+    }
+
+    private void invalidArgs(){
+        System.out.println("Arguments errors...");
+    }
+
+    private boolean enoughArgs (int nb){
+        if (this.args.size() > nb){
+            return true;
+        } else {
+            this.invalidCommand();
+            return false;
+        }
+    }
+
+    private boolean argsEqualsTo(int nb){
+        return this.args.size() == nb;
     }
 }

@@ -1,6 +1,5 @@
 package fr.eatroulette.core.controllers;
 
-import fr.eatroulette.core.models.RestaurantModel;
 import fr.eatroulette.core.models.TypeModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +32,7 @@ public class TypeController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.POST);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = typeModel.toJSON();
 
@@ -41,7 +41,7 @@ public class TypeController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -57,6 +57,8 @@ public class TypeController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return type;
@@ -75,6 +77,7 @@ public class TypeController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.PUT);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = typeModel.toJSON();
 
@@ -83,7 +86,7 @@ public class TypeController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -100,6 +103,8 @@ public class TypeController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return type;
@@ -119,6 +124,7 @@ public class TypeController {
             conn.setDoOutput(true);
             conn.setRequestMethod(ControllerConstant.DELETE);
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             String input = typeModel.toJSON();
 
@@ -149,9 +155,10 @@ public class TypeController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -168,6 +175,8 @@ public class TypeController {
             }
             conn.disconnect();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return types;
