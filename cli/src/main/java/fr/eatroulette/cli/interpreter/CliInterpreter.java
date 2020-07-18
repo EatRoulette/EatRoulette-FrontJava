@@ -89,7 +89,14 @@ public class CliInterpreter {
 
     private void addRestaurantInterpreter(){
         if (this.args.size() == 6){
-            System.out.println(this.args);
+            RestaurantModel r = new RestaurantModel(this.args.remove(0), this.args.remove(0), this.args.remove(0),
+                                                    this.args.remove(0), this.args.remove(0), this.args.remove(0));
+            r = RestaurantController.addRestaurant(r);
+            if (!r.getId().isEmpty()){
+                System.out.println(String.format("id: %s name: %s site: %s address: %s town: %s postalCode: %s dep: %s ",
+                                r.getId(), r.getName(), r.getSite(),
+                                r.getAddress(), r.getCity(), r.getPostalCode(), r.getDep()));
+            }
         }
     }
 
@@ -244,10 +251,12 @@ public class CliInterpreter {
 
     private void showHelp() {
         System.out.println("EatRoulette-cli commands ...");
-        System.out.println("\tadd [restaurant | type | allergen | characteristic] \n" +
+        System.out.println("\tadd [restaurant | type | allergen | characteristic] [data]\n" +
+                           "\tupd [type | allergen | characteristic] id [data]\n" +
                            "\tdell [restaurant | type | allergen | characteristic] id\n" +
                            "\trun [plugin-name]\n" +
-                           "\tshow [restaurants | types | allergens | characteristics | plugins]");
+                           "\tshow [restaurants | types | allergens | characteristics | plugins]\n" +
+                           "\texit");
     }
 
     private void invalidCommand() {
