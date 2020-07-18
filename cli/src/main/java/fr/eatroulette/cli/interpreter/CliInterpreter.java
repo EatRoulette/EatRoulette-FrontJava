@@ -251,12 +251,13 @@ public class CliInterpreter {
 
     private void showHelp() {
         System.out.println("EatRoulette-cli commands ...");
-        System.out.println("\tadd [restaurant | type | allergen | characteristic] [data]\n" +
-                           "\tupd [type | allergen | characteristic] id [data]\n" +
-                           "\tdell [restaurant | type | allergen | characteristic] id\n" +
-                           "\trun [plugin-name]\n" +
-                           "\tshow [restaurants | types | allergens | characteristics | plugins]\n" +
-                           "\texit");
+        System.out.println("*\tadd [restaurant | type | allergen | characteristic] [data]\n" +
+                           "*\tupd [type | allergen | characteristic] id [data]\n" +
+                           "*\tdell [restaurant | type | allergen | characteristic] id\n" +
+                           "*\trun [plugin-name]\n" +
+                           "*\tshow [restaurants | types | allergens | characteristics | plugins]\n" +
+                           "*\thelp #To get this panel\n" +
+                           "*\texit #To quit the application");
     }
 
     private void invalidCommand() {
