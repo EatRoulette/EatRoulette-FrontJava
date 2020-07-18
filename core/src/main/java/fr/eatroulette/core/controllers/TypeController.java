@@ -162,7 +162,7 @@ public class TypeController {
             for (int i = 0; i <jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                TypeModel type = new TypeModel((String) jsonObject.get("_id"),
+                TypeModel type = new TypeModel((String) jsonObject.get("id"),
                         (String) jsonObject.get("name"));
                 types.add(type);
             }
