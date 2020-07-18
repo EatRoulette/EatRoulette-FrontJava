@@ -36,7 +36,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>fr.eatroulette.cli.main.Main</mainClass>
+                                    <mainClass>fr.eatroulette.cli.CliMode</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

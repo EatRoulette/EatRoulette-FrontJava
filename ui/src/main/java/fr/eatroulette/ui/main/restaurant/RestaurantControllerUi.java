@@ -3,7 +3,6 @@ package fr.eatroulette.ui.main.restaurant;
 import fr.eatroulette.core.controllers.AllergenController;
 import fr.eatroulette.core.controllers.CharacteristicController;
 import fr.eatroulette.core.controllers.RestaurantController;
-import fr.eatroulette.core.controllers.TicketController;
 import fr.eatroulette.core.controllers.TypeController;
 
 import fr.eatroulette.core.models.AllergenModel;
@@ -13,12 +12,11 @@ import fr.eatroulette.core.models.TypeModel;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 
-import fr.eatroulette.ui.main.tickets.TicketsController;
+import fr.eatroulette.ui.main.tickets.TicketsControllerUI;
 import javafx.scene.control.TextField;
 
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.plugin.PluginController;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -36,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RestaurantControllerUi extends Application {
+public class RestaurantControllerUi {
 
     @FXML
     public TextField nameFormField;
@@ -90,21 +88,19 @@ public class RestaurantControllerUi extends Application {
     private List<String> listCharacName = new ArrayList<String>();
     private List<String> listAllergenName = new ArrayList<String>();
 
-    @Override
-    public void start(Stage stage) throws Exception {
-
-    }
-
     /**
      * Restaurant view create form
      */
     public void RenderFormCreateRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantCreateForm.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/RestaurantCreateForm.fxml")));
     }
 
     public void SendFormCreateRestaurant(){
         RestaurantModel restaurant = this.collectFormRestaurantCreator();
-        RestaurantController.addRestaurant(restaurant);
+        restaurant = RestaurantController.addRestaurant(restaurant);
+        if (!restaurant.getId().isEmpty()){
+            this.ClearView();
+        }
     }
 
     public RestaurantModel collectFormRestaurantCreator(){
@@ -158,7 +154,7 @@ public class RestaurantControllerUi extends Application {
             renderButton.setOnAction(click -> {
                     try {
                         RestaurantBox.getChildren().clear();
-                        FXMLLoader loaderSingleRestaurant = new FXMLLoader(getClass().getResource("/RestaurantOneJsonView.fxml"));
+                        FXMLLoader loaderSingleRestaurant = new FXMLLoader(getClass().getResource("/restaurants_views/RestaurantOneJsonView.fxml"));
                         SingleRestaurantController singleRestaurantController = new SingleRestaurantController(restaurant);
                         loaderSingleRestaurant.setController(singleRestaurantController);
                         VBox vBoxSingleRestaurant = loaderSingleRestaurant.load();
@@ -178,7 +174,7 @@ public class RestaurantControllerUi extends Application {
      * Add Allergen to restaurant view
      */
     public void renderFormAddAllergenToRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/AddAllergenToRestaurantView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/AddAllergenToRestaurantView.fxml")));
     }
 
     public void loadRestaurantAllergenBoxes(){
@@ -201,7 +197,7 @@ public class RestaurantControllerUi extends Application {
      * Load del allergen of restaurant
      */
     public void renderFormDelAllergenOfRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/DelAllergenOfRestaurantView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/DelAllergenOfRestaurantView.fxml")));
     }
 
     public void loadAllergensOfRestaurants(){
@@ -226,7 +222,7 @@ public class RestaurantControllerUi extends Application {
      * Add type to restaurant view
      */
     public void renderFormAddTypeRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddTypeView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/RestaurantAddTypeView.fxml")));
     }
 
     private void loadRestaurantTypeInformation(){
@@ -253,7 +249,7 @@ public class RestaurantControllerUi extends Application {
      * Load add allergen view
      */
     public void loadAllergenForm() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/AddAllergenView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/AddAllergenView.fxml")));
     }
 
     public void saveAllergen(){
@@ -270,7 +266,7 @@ public class RestaurantControllerUi extends Application {
      * Load update Allergen
      */
     public void loadUpdateAllergenForm() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateAllergenView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/UpdateAllergenView.fxml")));
     }
 
     public void loadAllergenBoxes(){
@@ -293,7 +289,7 @@ public class RestaurantControllerUi extends Application {
      *  Add type view
      */
     public void loadTypeForm()throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/AddTypeView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/AddTypeView.fxml")));
     }
 
     public void saveType(){
@@ -310,7 +306,12 @@ public class RestaurantControllerUi extends Application {
      * Load update type view
      */
     public void loadUpdateTypeForm() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateTypeView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/UpdateTypeView.fxml")));
+    }
+
+    public void loadTypeCombo(){
+        this.loadTypes();
+        comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 
     public void updateType() {
@@ -328,7 +329,7 @@ public class RestaurantControllerUi extends Application {
      * Add characteristic view
      */
     public void loadCharacForm() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/AddCharacView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/AddCharacView.fxml")));
     }
 
     public void saveCharac(){
@@ -345,7 +346,7 @@ public class RestaurantControllerUi extends Application {
      * load Update Characteristic view
      */
     public void loadUpdateCharacForm() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/UpdateCharacteristicView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/UpdateCharacteristicView.fxml")));
     }
 
     public void loadCharacCombobox(){
@@ -368,7 +369,7 @@ public class RestaurantControllerUi extends Application {
      * Form Add characteristic to restaurant
      */
     public void renderFormAddCharacRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/RestaurantAddCharacView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/RestaurantAddCharacView.fxml")));
     }
 
     public void loadRestaurantCharacBoxes(){
@@ -391,11 +392,11 @@ public class RestaurantControllerUi extends Application {
      * Load form to delete a restaurant type
      */
     public void renderFormDelTypeRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/DelTypeOfRestaurantView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/DelTypeOfRestaurantView.fxml")));
     }
 
     public void loadTypeCombobox(){
-        this.loadTypes();
+        this.loadTypesOfRestaurant();
         comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 
@@ -416,7 +417,7 @@ public class RestaurantControllerUi extends Application {
      * Load form to delete a restaurant characteristic
      */
     public void renderFormDelCharacRestaurant() throws IOException {
-        setDataPane(FXMLLoader.load(getClass().getResource("/DelCharacOfRestaurantView.fxml")));
+        setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/DelCharacOfRestaurantView.fxml")));
     }
 
     public void loadRestaurantComboBox(){
@@ -524,7 +525,7 @@ public class RestaurantControllerUi extends Application {
         this.router.<PluginController>goTo("Plugin", controller -> controller.setRouter(router));
     }
     public void goToTickets(){
-        this.router.<TicketsController>goTo("Tickets", controller -> controller.setRouter(router));
+        this.router.<TicketsControllerUI>goTo("Tickets", controller -> controller.setRouter(router));
     }
 
     private void setDataPane(Node node){

@@ -5,7 +5,7 @@ import com.google.common.io.Files;
 import fr.eatroulette.core.plugin.PluginManager;
 import fr.eatroulette.ui.main.Router;
 import fr.eatroulette.ui.main.restaurant.RestaurantControllerUi;
-import fr.eatroulette.ui.main.tickets.TicketsController;
+import fr.eatroulette.ui.main.tickets.TicketsControllerUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -118,7 +118,7 @@ public class PluginController extends Application {
     }
 
     public void goToTickets(){
-        this.router.<TicketsController>goTo("Tickets", controller -> controller.setRouter(router));
+        this.router.<TicketsControllerUI>goTo("Tickets", controller -> controller.setRouter(router));
     }
 
     public static void main(String[] args) {

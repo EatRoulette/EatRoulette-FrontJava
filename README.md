@@ -15,7 +15,7 @@ To create a plugin you will need :
 
 ### Add the interface *EatRoulettePlugin*
 
-You wiil need to create a Java class named EatRoulettePlugin.java with the following content :
+You will need to create a Java class named EatRoulettePlugin.java with the following content :
 
 ```java
 public interface EatRoulettePlugin {
@@ -44,3 +44,30 @@ public class EatRouletteEntry implements EatRoulettePlugin {
 
 
 You can now develop your plugins.
+
+
+
+## CLI Mode
+
+To run the program in cli mode you need to add *-cli* option. Example : 
+
+```sh
+java -jar EatRoulette.jar -cli
+```
+
+
+
+### Available commands 
+
+```
+EatRoulette-cli commands ...
+*	add [restaurant | type | allergen | characteristic] [data]
+*	upd [type | allergen | characteristic] id [data]
+*	dell [restaurant | type | allergen | characteristic] id
+*	run [plugin-name]
+*	show [restaurants | types | allergens | characteristics | plugins]
+*	help #To get this panel
+*	exit #To quit the application
+```
+
+You can type help at every moment to get this reminder.

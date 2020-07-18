@@ -56,7 +56,7 @@ public class RestaurantController {
             JSONObject jsonObject = new JSONObject(output);
             restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                     (String) jsonObject.get("name"),
-                    (String) jsonObject.get("site"),
+                    (String) jsonObject.get("website"),
                     (String) jsonObject.get("address"),
                     (String) jsonObject.get("city"),
                     (String) jsonObject.get("postalCode"),
@@ -105,7 +105,7 @@ public class RestaurantController {
             JSONObject jsonObject = new JSONObject(output);
             restaurant = new RestaurantModel((String) jsonObject.get("_id"),
                                             (String) jsonObject.get("name"),
-                                            (String) jsonObject.get("site"),
+                                            (String) jsonObject.get("website"),
                                             (String) jsonObject.get("address"),
                                             (String) jsonObject.get("city"),
                                             (String) jsonObject.get("postalCode"),
@@ -205,14 +205,15 @@ public class RestaurantController {
                     characteristicsList.add(c);
                 }
 
-                RestaurantModel restaurant = new RestaurantModel((String) jsonObject.get("_id"),
-                                                                 (String) jsonObject.get("name"),
-                                                                 (String) jsonObject.get("site"),
-                                                                 (String) jsonObject.get("address"),
-                                                                 (String) jsonObject.get("city"),
-                                                                 (String) jsonObject.get("postalCode"),
-                                                                 (String) jsonObject.get("dep"),
-                                                                  typesList, allergensList, characteristicsList);
+
+                RestaurantModel restaurant = new RestaurantModel(checkAndReturnValue(jsonObject,"_id"),
+                                                                checkAndReturnValue(jsonObject,"name"),
+                                                                checkAndReturnValue(jsonObject,"site"),
+                                                                checkAndReturnValue(jsonObject,"address"),
+                                                                checkAndReturnValue(jsonObject,"city"),
+                                                                checkAndReturnValue(jsonObject,"postalCode"),
+                                                                checkAndReturnValue(jsonObject,"dep"),
+                                                                typesList, allergensList, characteristicsList);
                 restaurants.add(restaurant);
             }
             conn.disconnect();
@@ -220,6 +221,10 @@ public class RestaurantController {
             e.printStackTrace();
         }
         return restaurants;
+    }
+
+    public static String checkAndReturnValue(JSONObject obj, String key){
+        return obj.has(key)? obj.getString(key) : null;
     }
 
     /**
@@ -521,29 +526,4 @@ public class RestaurantController {
         }
         return restaurant;
     }
-
-    public static void main(String[] args) {
-        RestaurantModel restaurantModel = new RestaurantModel("5ed527bc4d114b002471b499", "TESTFORDELETE2", "TESTS", "----", "PARIS", "75012", "75");
-//        boolean result = RestaurantController.deleteRestaurant(restaurantModel);
-//        System.out.println(result);
-        CharacteristicModel c = new CharacteristicModel( "5f0ef4d6094b6400244cfb61", "PMR");
-        restaurantModel = deleteCharacteristicToRestaurant(restaurantModel, c);
-        System.out.println(restaurantModel.getId());
-
-        //        List<RestaurantModel> restaurants = getAllRestaurants();
-//        for (RestaurantModel restaurant: restaurants){
-//            System.out.println(restaurant.getId()+" "+restaurant.getName());
-//            for (TypeModel t: restaurant.getTypes()){
-//                System.out.println(t.getName());
-//            }
-//        }
-//        RestaurantModel restaurantModel = restaurants.get(0);
-//        System.out.println(restaurantModel.getName());
-//        RestaurantModel result = RestaurantController.deleteTypeToRestaurant(restaurantModel, typeModel);
-//        System.out.println(result.getName());
-
-    }
-
-
-
 }

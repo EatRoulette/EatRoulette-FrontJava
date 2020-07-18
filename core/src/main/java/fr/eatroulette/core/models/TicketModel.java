@@ -13,6 +13,7 @@ public class TicketModel {
     private Integer emergency;
     private List<CommentModel> comments;
     private LocalDate createdAt;
+    private boolean sortedComment;
 
 
     public TicketModel(String id, UserModel author,
@@ -28,6 +29,7 @@ public class TicketModel {
         this.emergency = emergency;
         this.comments = comments;
         this.createdAt = createdAt;
+        this.sortedComment = false;
     }
 
     public void setId(String id) {
@@ -44,6 +46,14 @@ public class TicketModel {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthorName() {
+        String name = "";
+        if(this.author != null){
+            name = this.author.getFirstname() + " " + this.author.getLastname();
+        }
+        return name;
     }
 
     public void setTitle(String title) {
@@ -82,6 +92,10 @@ public class TicketModel {
         this.emergency = emergency;
     }
 
+    public void addComment(CommentModel c){
+        this.comments.add(c);
+    }
+
     public List<CommentModel> getComments() {
         return comments;
     }
@@ -100,5 +114,13 @@ public class TicketModel {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isSortedComment() {
+        return sortedComment;
+    }
+
+    public void setSortedComment(boolean sortedComment) {
+        this.sortedComment = sortedComment;
     }
 }
