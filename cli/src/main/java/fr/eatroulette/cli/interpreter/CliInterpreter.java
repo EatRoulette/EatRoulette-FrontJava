@@ -100,20 +100,9 @@ public class CliInterpreter {
                 System.out.println(String.format("id: %s name: %s site: %s address: %s town: %s postalCode: %s dep: %s ",
                                 r.getId(), r.getName(), r.getSite(),
                                 r.getAddress(), r.getCity(), r.getPostalCode(), r.getDep()));
-                return;
             }
-        }
-        switch (this.args.get(0)){
-            case "t":
-
-                break;
-            case "c":
-                break;
-            case "a":
-                break;
-            default:
-                this.invalidCommand();
-                break;
+        } else {
+            this.invalidArgs();
         }
     }
 
