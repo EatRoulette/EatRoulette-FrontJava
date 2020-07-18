@@ -44,7 +44,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -67,6 +67,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -93,7 +95,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -116,6 +118,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -170,7 +174,7 @@ public class RestaurantController {
             conn.setRequestProperty("Accept", "application/json");
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new Exception("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
@@ -219,6 +223,8 @@ public class RestaurantController {
             conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return restaurants;
     }
@@ -253,7 +259,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -265,6 +271,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -296,7 +304,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new Exception("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
             restaurantModel.delType(typeModel);
@@ -307,6 +315,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -383,7 +393,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -395,6 +405,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -426,7 +438,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new Exception("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
             restaurantModel.delAllergen(allergenModel);
@@ -437,6 +449,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -468,7 +482,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -480,6 +494,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;
@@ -511,7 +527,7 @@ public class RestaurantController {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new Exception("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
             restaurantModel.delCharacteristic(characteristicModel);
@@ -522,6 +538,8 @@ public class RestaurantController {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return restaurant;

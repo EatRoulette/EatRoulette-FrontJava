@@ -40,7 +40,7 @@ public class AuthController {
             }
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -76,7 +76,7 @@ public class AuthController {
             conn.setRequestProperty("Accept", "application/json");
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 

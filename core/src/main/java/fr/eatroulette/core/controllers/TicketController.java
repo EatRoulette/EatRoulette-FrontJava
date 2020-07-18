@@ -37,7 +37,7 @@ public class TicketController {
             conn.setRequestProperty("Accept", "application/json");
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -75,6 +75,8 @@ public class TicketController {
             conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return tickets;
     }
@@ -94,7 +96,7 @@ public class TicketController {
 
             int response = conn.getResponseCode();
             if (response != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
 
@@ -103,6 +105,8 @@ public class TicketController {
             return true;
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -127,12 +131,14 @@ public class TicketController {
             os.flush();
             int response = conn.getResponseCode();
             if (response != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Exception("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
             conn.disconnect();
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
