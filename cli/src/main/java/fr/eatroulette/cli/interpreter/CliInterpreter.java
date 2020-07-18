@@ -100,9 +100,20 @@ public class CliInterpreter {
                 System.out.println(String.format("id: %s name: %s site: %s address: %s town: %s postalCode: %s dep: %s ",
                                 r.getId(), r.getName(), r.getSite(),
                                 r.getAddress(), r.getCity(), r.getPostalCode(), r.getDep()));
+                return;
             }
-        } else {
-            this.invalidCommand();
+        }
+        switch (this.args.get(0)){
+            case "t":
+
+                break;
+            case "c":
+                break;
+            case "a":
+                break;
+            default:
+                this.invalidCommand();
+                break;
         }
     }
 
@@ -160,8 +171,8 @@ public class CliInterpreter {
         switch (args.get(0)){
             case "type":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -175,8 +186,8 @@ public class CliInterpreter {
                 break;
             case "allergen":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -190,8 +201,8 @@ public class CliInterpreter {
                 break;
             case "characteristic":
                 this.args.remove(0);
-                if (!(this.args.size() == 2)) {
-                    System.out.println("Not enought arguments");
+                if (!this.argsEqualsTo(2)) {
+                    this.invalidArgs();
                     return;
                 }
                 id = this.args.remove(0);
@@ -250,7 +261,7 @@ public class CliInterpreter {
     }
 
     private void runInterpreter() {
-        if (this.args.size() > 0){
+        if (this.enoughArgs(0)){
             try {
                 this.pluginManager.runPlugin(this.args.remove(0));
             } catch (IOException | InstantiationException |
@@ -273,7 +284,11 @@ public class CliInterpreter {
     }
 
     private void invalidCommand() {
-        System.out.println("Invalid command line");
+        System.out.println("Invalid command line... Enter 'help' to get a reminder");
+    }
+
+    private void invalidArgs(){
+        System.out.println("Arguments errors...");
     }
 
     private boolean enoughArgs (int nb){
@@ -283,5 +298,9 @@ public class CliInterpreter {
             this.invalidCommand();
             return false;
         }
+    }
+
+    private boolean argsEqualsTo(int nb){
+        return this.args.size() == nb;
     }
 }
