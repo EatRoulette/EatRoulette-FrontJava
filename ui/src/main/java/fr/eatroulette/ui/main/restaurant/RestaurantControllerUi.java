@@ -97,7 +97,10 @@ public class RestaurantControllerUi {
 
     public void SendFormCreateRestaurant(){
         RestaurantModel restaurant = this.collectFormRestaurantCreator();
-        RestaurantController.addRestaurant(restaurant);
+        restaurant = RestaurantController.addRestaurant(restaurant);
+        if (!restaurant.getId().isEmpty()){
+            this.ClearView();
+        }
     }
 
     public RestaurantModel collectFormRestaurantCreator(){
@@ -304,6 +307,11 @@ public class RestaurantControllerUi {
      */
     public void loadUpdateTypeForm() throws IOException {
         setDataPane(FXMLLoader.load(getClass().getResource("/restaurants_views/UpdateTypeView.fxml")));
+    }
+
+    public void loadTypeCombo(){
+        this.loadTypes();
+        comboType.setItems(FXCollections.observableArrayList(this.listTypeName));
     }
 
     public void updateType() {
