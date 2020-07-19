@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +30,7 @@ public class TicketController {
         List<TicketModel> tickets = new ArrayList<>();
 
         try {
-            URL url = new URL(ControllerConstant.API_URL+"/tickets");
+            URL url = new URL(ControllerConstant.API_URL+"/ticket/desk/open");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(ControllerConstant.GET);
             conn.setRequestProperty("Accept", "application/json");
@@ -69,8 +68,9 @@ public class TicketController {
                         checkAndReturnValue(jsonObject,"type"),
                         0,
                         comments,
-                        jsonObject.has("created_at") ? manageDate(jsonObject.get("created_at").toString()) : null
-                 );
+                        jsonObject.has("created_at") ? manageDate(jsonObject.get("created_at").toString()) : null,
+                        checkAndReturnValue(jsonObject, "restaurantId"));
+
                 tickets.add(ticket);
             }
             conn.disconnect();
