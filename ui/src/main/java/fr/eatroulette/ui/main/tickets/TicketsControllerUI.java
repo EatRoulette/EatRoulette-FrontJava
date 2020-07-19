@@ -1,6 +1,7 @@
 package fr.eatroulette.ui.main.tickets;
 
 
+import fr.eatroulette.core.controllers.RestaurantController;
 import fr.eatroulette.core.controllers.TicketController;
 import fr.eatroulette.core.models.CommentModel;
 import fr.eatroulette.core.models.TicketModel;
@@ -49,7 +50,7 @@ public class TicketsControllerUI implements Initializable {
         List<TicketModel> filteredList = tickets.stream()
                 .filter(t -> t.getType().equals("Bogue") )
                 .collect(Collectors.toList());
-        display(ticketsRoot, filteredList);
+        display(ticketsRoot, filteredList, false);
 
     }
 
@@ -60,7 +61,7 @@ public class TicketsControllerUI implements Initializable {
         List<TicketModel> filteredList = tickets.stream()
                 .filter(t -> t.getType().equals("Demande") )
                 .collect(Collectors.toList());
-        display(ticketsRoot, filteredList);
+        display(ticketsRoot, filteredList, false);
     }
 
     public void displayOnlyNewRestaurantRequest(){
@@ -70,17 +71,17 @@ public class TicketsControllerUI implements Initializable {
         List<TicketModel> filteredList = tickets.stream()
                 .filter(t -> t.getType().equals("Nouveau restaurant") )
                 .collect(Collectors.toList());
-        display(ticketsRoot, filteredList);
+        display(ticketsRoot, filteredList, true);
     }
 
     public void displayTickets(){
         VBox ticketsRoot = new VBox();
         this.ClearView();
 
-        display(ticketsRoot, tickets);
+        display(ticketsRoot, tickets,false);
     }
 
-    private void display (VBox box, List<TicketModel> ticketsToDisplay){
+    private void display (VBox box, List<TicketModel> ticketsToDisplay, boolean isRestaurantTicket){
 
         for (int i = 0; i < ticketsToDisplay.size(); i++){
             TicketModel ticket = ticketsToDisplay.get(i);
@@ -89,7 +90,7 @@ public class TicketsControllerUI implements Initializable {
                 try {
                     box.getChildren().clear();
                     // display details
-                    displayDetails(box, ticket);
+                    displayDetails(box, ticket, isRestaurantTicket);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -101,7 +102,7 @@ public class TicketsControllerUI implements Initializable {
         this.setDataPane(box);
     }
 
-    private void displayDetails (VBox box, TicketModel ticketToDisplay){
+    private void displayDetails (VBox box, TicketModel ticketToDisplay, boolean isRestaurantTicket){
         Label title = new Label("Titre : " + ticketToDisplay.getTitle());
         Label author = new Label("Auteur : " + ticketToDisplay.getAuthorName());
         Label message = new Label("Message : " + ticketToDisplay.getMessage());
@@ -111,13 +112,27 @@ public class TicketsControllerUI implements Initializable {
         Label type = new Label("Type : " + ticketToDisplay.getType());
         Label createdAt = new Label("Créé le : " + ticketToDisplay.getCreatedAt().toString());
         Button updateStatusBtn = new Button("Update");
-        updateStatusBtn.setOnAction(click -> {
-            ticketToDisplay.setStatus(comboBoxStatus.getValue());
-            if (TicketController.updateTicketStatus(ticketToDisplay)){
-                box.getChildren().clear();
-                displayDetails(box, ticketToDisplay);
-            }
-        });
+        if (isRestaurantTicket){
+            updateStatusBtn.setOnAction(click -> {
+                ticketToDisplay.setStatus(comboBoxStatus.getValue());
+                if (ticketToDisplay.getStatus().equals("Traité")){
+                    RestaurantController.updateRestaurantStatus(ticketToDisplay.getIdRestaurant());
+                }
+                if (TicketController.updateTicketStatus(ticketToDisplay)){
+                    box.getChildren().clear();
+                    displayDetails(box, ticketToDisplay, isRestaurantTicket);
+                }
+            });
+        } else {
+            updateStatusBtn.setOnAction(click -> {
+                ticketToDisplay.setStatus(comboBoxStatus.getValue());
+                if (TicketController.updateTicketStatus(ticketToDisplay)){
+                    box.getChildren().clear();
+                    displayDetails(box, ticketToDisplay, isRestaurantTicket);
+                }
+            });
+        }
+
         HBox addCommHbox = new HBox(10);
         TextField commentField = new TextField();
         Button addCommBtn = new Button("Commenter");
@@ -128,7 +143,7 @@ public class TicketsControllerUI implements Initializable {
                 ticketToDisplay.addComment(c);
                 box.getChildren().clear();
                 Collections.reverse(ticketToDisplay.getComments());
-                displayDetails(box, ticketToDisplay);
+                displayDetails(box, ticketToDisplay, isRestaurantTicket);
             }
         });
 

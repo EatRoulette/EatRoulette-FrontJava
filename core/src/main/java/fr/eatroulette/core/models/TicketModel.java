@@ -14,12 +14,13 @@ public class TicketModel {
     private List<CommentModel> comments;
     private LocalDate createdAt;
     private boolean sortedComment;
+    private String idRestaurant;
 
 
     public TicketModel(String id, UserModel author,
                        String title, String message,
                        String status, String type, Integer emergency,
-                       List<CommentModel> comments, LocalDate createdAt) {
+                       List<CommentModel> comments, LocalDate createdAt, String idRestaurant) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -29,6 +30,7 @@ public class TicketModel {
         this.emergency = emergency;
         this.comments = comments;
         this.createdAt = createdAt;
+        this.idRestaurant = idRestaurant;
         this.sortedComment = false;
     }
 
@@ -122,5 +124,13 @@ public class TicketModel {
 
     public void setSortedComment(boolean sortedComment) {
         this.sortedComment = sortedComment;
+    }
+
+    public String getIdRestaurant() {
+        return idRestaurant;
+    }
+
+    public void setIdRestaurant(String idRestaurant) {
+        this.idRestaurant = idRestaurant;
     }
 }

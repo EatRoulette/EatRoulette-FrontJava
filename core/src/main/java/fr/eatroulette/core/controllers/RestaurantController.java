@@ -127,6 +127,39 @@ public class RestaurantController {
     }
 
     /**
+     * Update the restaurant status
+     * @param restaurantId
+     * @return
+     */
+    public static boolean updateRestaurantStatus(String restaurantId) {
+        boolean ret = false;
+        try {
+            URL url = new URL(ControllerConstant.API_URL+"/restaurant/validate/"+restaurantId);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod(ControllerConstant.PUT);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("x-access-token", ControllerConstant.ADM_TOKEN);
+
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new Exception("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            conn.disconnect();
+            ret = true;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    /**
      * Delete a restaurant
      * @param restaurantModel
      * @return
@@ -219,6 +252,7 @@ public class RestaurantController {
                                                                 checkAndReturnValue(jsonObject,"city"),
                                                                 checkAndReturnValue(jsonObject,"postalCode"),
                                                                 checkAndReturnValue(jsonObject,"dep"),
+                                                                checkAndReturnValue(jsonObject, "status"),
                                                                 typesList, allergensList, characteristicsList);
                 restaurants.add(restaurant);
             }
@@ -231,7 +265,7 @@ public class RestaurantController {
         return restaurants;
     }
 
-    public static String checkAndReturnValue(JSONObject obj, String key){
+    private static String checkAndReturnValue(JSONObject obj, String key){
         return obj.has(key)? obj.getString(key) : null;
     }
 
@@ -332,7 +366,7 @@ public class RestaurantController {
      * @param typeModel
      * @return
      */
-    public static boolean isRestaurantContainType(RestaurantModel restaurantModel,TypeModel typeModel){
+    private static boolean isRestaurantContainType(RestaurantModel restaurantModel, TypeModel typeModel){
         for (TypeModel t: restaurantModel.getTypes()){
             if(t.getName().equals(typeModel.getName())){
                 return true;
@@ -347,7 +381,7 @@ public class RestaurantController {
      * @param characteristicModel
      * @return
      */
-    public static boolean isRestaurantContainCharac(RestaurantModel restaurantModel,CharacteristicModel characteristicModel){
+    private static boolean isRestaurantContainCharac(RestaurantModel restaurantModel, CharacteristicModel characteristicModel){
         for (CharacteristicModel t: restaurantModel.getCharacteristics()){
             if(t.getName().equals(characteristicModel.getName())){
                 return true;
@@ -362,7 +396,7 @@ public class RestaurantController {
      * @param allergenModel
      * @return
      */
-    public static boolean isRestaurantContainAllergen(RestaurantModel restaurantModel, AllergenModel allergenModel){
+    private static boolean isRestaurantContainAllergen(RestaurantModel restaurantModel, AllergenModel allergenModel){
         for (AllergenModel a: restaurantModel.getAllergens()){
             if(a.getName().equals(allergenModel.getName())){
                 return true;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantModel {
+    private String status;
     private String id;
     private String name;
     private String site;
@@ -57,7 +58,7 @@ public class RestaurantModel {
     }
 
     public RestaurantModel(String id, String name, String site, String address,
-                           String city, String postalCode, String dep,
+                           String city, String postalCode, String dep, String status,
                            List<TypeModel> types, List<AllergenModel> allergens, List<CharacteristicModel> characteristics) {
         this.id = id;
         this.name = name;
@@ -66,6 +67,7 @@ public class RestaurantModel {
         this.city = city;
         this.postalCode = postalCode;
         this.dep = dep;
+        this.status = status;
         this.types = types;
         this.allergens = allergens;
         this.characteristics = characteristics;
